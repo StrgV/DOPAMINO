@@ -1,1 +1,26 @@
 @import 'tailwindcss';
+
+:root {
+  --text-color: #dcdcf9;
+  --background-color: #18122b;
+  --primary-color: #f66065;
+  --secondary-color: #7a5de5;
+  --accent-color: #ffbe1a;
+}
+
+body{
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* horizontal */
+  align-items: center;     /* vertical */
+  height: 100vh;           
+  margin: 0;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+h1 {
+    font-family: 'DM Serif Text', serif;
+    font-weight: normal;
+    font-size: 5rem;
+  }
