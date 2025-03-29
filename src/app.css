@@ -48,3 +48,8 @@ input {
   background-color: var(--secondary-color);
   color: var(--text-color-light);
 }
+
+img{
+  padding-left: 10rem;
+  padding-right: 10rem;
+}

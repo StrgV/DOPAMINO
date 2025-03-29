@@ -1,4 +1,8 @@
-<h1>DOPAMINO</h1>
+<script lang="ts">
+import logo from "$lib/assets/DOPAMINO_Text_Logo.svg";
+</script>
+
+<img src="{logo}" alt="Logo of DOPAMINO" />
 <h2 class="italic">~wir sind dein Casino</h2>
 
 <form method="POST">
