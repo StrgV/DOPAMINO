@@ -1,7 +1,8 @@
 @import 'tailwindcss';
 
 :root {
-  --text-color: #dcdcf9;
+  --text-color-light: #dcdcf9;
+  --text-color-dark: #160433;
   --background-color: #18122b;
   --primary-color: #f66065;
   --secondary-color: #7a5de5;
@@ -16,11 +17,34 @@ body{
   height: 100vh;           
   margin: 0;
   background-color: var(--background-color);
-  color: var(--text-color);
+  color: var(--text-color-light);
 }
 
 h1 {
-    font-family: 'DM Serif Text', serif;
-    font-weight: normal;
-    font-size: 5rem;
-  }
+  font-family: 'DM Serif Text', serif;
+  font-weight: normal;
+  font-size: 5rem;
+}
+
+h2 {
+  font-family: 'DM Serif Text', serif;
+  font-weight: normal;
+  font-size: 2rem;
+}
+
+button {
+  margin: 1rem;
+  padding: 0.5rem;
+  background-clip: padding-box;
+  border-radius: 0.5rem;
+  background-color: var(--accent-color);
+  color: var(--text-color-dark);
+}
+
+input {
+  padding: 0.5rem;
+  background-clip: padding-box;
+  border-radius: 0.5rem;
+  background-color: var(--secondary-color);
+  color: var(--text-color-light);
+}
