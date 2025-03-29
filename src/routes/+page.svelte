@@ -1,7 +1,7 @@
 <h1>DOPAMINO</h1>
 <h2 class="italic">~wir sind dein Casino</h2>
 
-<form method="POST">
+<form method="POST" action="?/login">
     <input name="username" placeholder="Username" required />
     <!-- <input name="email" type="email" placeholder="E-Mail" required /> -->
     <input name="password" type="password" placeholder="Passwort" required />
