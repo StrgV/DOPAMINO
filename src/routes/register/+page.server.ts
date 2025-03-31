@@ -29,7 +29,7 @@ export const actions: Actions = {
       name,
       username,
       email,
-      password, // Hinweis: Passwort sollte später mit bcrypt gehasht werden!
+      password, // TODO: Passwort sollte später mit bcrypt gehasht werden!
       kontostand: 5000,
       age: null
     });

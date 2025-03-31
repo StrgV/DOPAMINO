@@ -42,6 +42,7 @@ button {
 }
 
 input {
+  margin: 0.25rem;
   padding: 0.5rem;
   background-clip: padding-box;
   border-radius: 0.5rem;
@@ -52,4 +53,10 @@ input {
 img{
   padding-left: 10rem;
   padding-right: 10rem;
+}
+
+.column{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
