@@ -3,6 +3,8 @@ import { user } from '$lib/server/db/schema';
 import type { Actions } from './$types';
 import { redirect, fail } from '@sveltejs/kit';
 import bcrypt from 'bcrypt';
+import type { FailResponse } from '$lib/types';
+
 
 console.log('Register action called'); // Debugging output
 
@@ -18,7 +20,11 @@ export const actions: Actions = {
 
     // Validation: Check if all fields are filled
     if (!forename || !name || !username || !email || !password) {
-      return fail(400, { error: 'Alle Felder sind erforderlich!' });
+      return fail<FailResponse>(400, {
+        error: 'Alle Felder sind erforderlich!',
+        values: { forename, name, username, email }
+      });
+      
     }
 
     // Password validation
@@ -28,14 +34,12 @@ export const actions: Actions = {
     }
     else {
       console.log('Password is invalid');
-      return fail(400, { error: 'Das Passwort muss mindestens 8 Zeichen lang sein und mindestens einen Großbuchstaben, einen Kleinbuchstaben, eine Zahl und ein Sonderzeichen enthalten.' });
+      return fail<FailResponse>(400, {
+        error: 'Das Passwort muss mindestens 8 Zeichen lang sein und mindestens einen Großbuchstaben, einen Kleinbuchstaben, eine Zahl und ein Sonderzeichen enthalten.',
+        values: { forename, name, username, email }
+        });
     }
 
-    // Test cases
-    console.log('Testing password regex');
-    console.log(passwordRegex.test('Test123')); // true or false
-    console.log(passwordRegex.test('Test123!')); // true or false
-    console.log(passwordRegex.test('Wick440mio!')); // true or false
 
     console.log('Inserting from form ', {forename, name, username, email, password}); // Debugging output
 
