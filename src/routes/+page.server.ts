@@ -29,7 +29,6 @@ export const actions: Actions = {
     const isPasswordValid = await bcrypt.compare(password, storedPassword);
 
     if(!isPasswordValid) {
-      alert('Ungültiger Benutzername oder Passwort!');
       return fail(400, { error: 'Ungültiger Benutzername oder Passwort!' });
     }
 

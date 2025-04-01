@@ -51,8 +51,8 @@ input {
 }
 
 img{
-  padding-left: 10rem;
-  padding-right: 10rem;
+  padding-left: 10%;
+  padding-right: 10%;
 }
 
 .column{
@@ -60,3 +60,4 @@ img{
   flex-direction: column;
   align-items: center;
 }
+
