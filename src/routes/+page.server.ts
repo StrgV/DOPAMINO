@@ -3,6 +3,7 @@ import { user } from '$lib/server/db/schema';
 import type { Actions } from './$types';
 import { redirect, fail } from '@sveltejs/kit';
 import { eq, and } from 'drizzle-orm';
+import bcrypt from 'bcrypt';
 
 console.log('Login action called'); // Debugging output
 
@@ -12,27 +13,29 @@ export const actions: Actions = {
     const username = form.get('username') as string;
     const password = form.get('password') as string;
 
-    // Validierung: Überprüfen, ob alle Felder ausgefüllt sind
+    // Validation: Check if all fields are filled
     if (!username || !password) {
       return fail(400, { error: 'Benutzername und Passwort sind erforderlich!' });
     }
 
-    // Überprüfen, ob der Benutzer in der Datenbank existiert
+    // Check if the user exists in the database
     const userRecord = await db
     .select()
     .from(user)
-    .where(and(eq(user.username, username), eq(user.password, password)))
+    .where(eq(user.username, username))
     .execute();
+
+    const storedPassword = userRecord[0].password; // Hashed password from the database
+    const isPasswordValid = await bcrypt.compare(password, storedPassword);
+
+    if(!isPasswordValid) {
+      alert('Ungültiger Benutzername oder Passwort!');
+      return fail(400, { error: 'Ungültiger Benutzername oder Passwort!' });
+    }
 
     console.log('Login attempt:', { username, password });
 
-    if (userRecord.length === 0) {
-      // Benutzername oder Passwort ist falsch
-      return fail(401, { error: 'Ungültige Anmeldedaten!' });
-    }
-
-
-    // Weiterleitung zu /casino bei erfolgreicher Anmeldung
+    // Redirect to /casino on successful login
     throw redirect(303, '/casino');
   }
 };

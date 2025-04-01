@@ -9,7 +9,7 @@ export const user = sqliteTable('user', {
     username: text('username').notNull(),
     email: text('email').notNull(),
     password: text('password').notNull(),
-    kontostand: integer('kontostand').default(5000),
+    balance: integer('balance').default(5000),
     age: integer('age')
 });
 
