@@ -15,7 +15,9 @@ export const actions: Actions = {
 
     // Validation: Check if all fields are filled
     if (!username || !password) {
-      return fail(400, { error: 'Benutzername und Passwort sind erforderlich!' });
+      return fail(400, { error: 'Benutzername und Passwort sind erforderlich!',
+        values: { username }
+       });
     }
 
     // Check if the user exists in the database
@@ -25,14 +27,21 @@ export const actions: Actions = {
     .where(eq(user.username, username))
     .execute();
 
+    if(userRecord.length === 0) {
+      return fail(400, { error: 'Ungültiger Benutzername oder Passwort!',
+      values: { username }
+      });
+    }
+
     const storedPassword = userRecord[0].password; // Hashed password from the database
     const isPasswordValid = await bcrypt.compare(password, storedPassword);
 
     if(!isPasswordValid) {
-      alert('Ungültiger Benutzername oder Passwort!');
-      return fail(400, { error: 'Ungültiger Benutzername oder Passwort!' });
+      return fail(400, { error: 'Ungültiger Benutzername oder Passwort!',
+      values: { username }
+      });
     }
-
+    
     console.log('Login attempt:', { username, password });
 
     // Redirect to /casino on successful login
