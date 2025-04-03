@@ -3,6 +3,9 @@ import { user } from '$lib/server/db/schema';
 import type { Actions } from './$types';
 import { redirect, fail } from '@sveltejs/kit';
 import bcrypt from 'bcrypt';
+import type { FailResponse } from '$lib/types';
+import { eq } from 'drizzle-orm';
+
 
 console.log('Register action called'); // Debugging output
 
@@ -12,15 +15,45 @@ export const actions: Actions = {
     const form = await request.formData();
     const forename = form.get('forename') as string;
     const name = form.get('name') as string;
+    const age = parseInt(form.get('age') as string); // Convert to number
     const username = form.get('username') as string;
     const email = form.get('email') as string;
     const password = form.get('password') as string;
 
     // Validation: Check if all fields are filled
     if (!forename || !name || !username || !email || !password) {
-      return fail(400, { error: 'Alle Felder sind erforderlich!' });
+      return fail<FailResponse>(400, {
+        error: 'Alle Felder sind erforderlich!',
+        values: { forename, name, age, username, email }
+      });
+      
+    }
+    
+    
+    // Check if username already exists
+    const existingUser = await db
+    .select()
+    .from(user)
+    .where(eq(user.username, username))
+    .execute();
+    
+    if (existingUser.length > 0) {
+      return fail<FailResponse>(400, {
+        error: 'Benutzername ist bereits vergeben!',
+        values: { forename, name, age, username, email }
+      });
+    }
+    
+    if(!age || isNaN(age) || age < 18) {
+      return fail<FailResponse>(400, {
+        error: 'Das Alter muss mindestens 18 Jahre betragen!',
+        values: { forename, name, age, username, email }
+      });
     }
 
+    
+    console.log('Inserting from form ', {forename, name, age, username, email, password}); // Debugging output
+    
     // Password validation
     const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*\d).{8,}$/; // At least 8 characters, at least 1 letter and 1 number
     if (passwordRegex.test(password)) {
@@ -28,16 +61,11 @@ export const actions: Actions = {
     }
     else {
       console.log('Password is invalid');
-      return fail(400, { error: 'Das Passwort muss mindestens 8 Zeichen lang sein und mindestens einen Großbuchstaben, einen Kleinbuchstaben, eine Zahl und ein Sonderzeichen enthalten.' });
+      return fail<FailResponse>(400, {
+      error: 'Das Passwort muss mindestens 8 Zeichen lang sein und mindestens einen Großbuchstaben, einen Kleinbuchstaben, eine Zahl und ein Sonderzeichen enthalten.',
+      values: { forename, name, age, username, email }
+      });
     }
-
-    // Test cases
-    console.log('Testing password regex');
-    console.log(passwordRegex.test('Test123')); // true or false
-    console.log(passwordRegex.test('Test123!')); // true or false
-    console.log(passwordRegex.test('Wick440mio!')); // true or false
-
-    console.log('Inserting from form ', {forename, name, username, email, password}); // Debugging output
 
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -52,7 +80,7 @@ export const actions: Actions = {
       email,
       password: hashedPassword, // Store hashed password
       balance: 5000, // Default balance
-      age: null
+      age: 18 // Default age
     });
     
     // Redirect after successful registration
