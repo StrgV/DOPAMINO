@@ -44,6 +44,7 @@ button {
 input {
   margin: 0.25rem;
   padding: 0.5rem;
+  width: 15rem;
   background-clip: padding-box;
   border-radius: 0.5rem;
   background-color: var(--secondary-color);
