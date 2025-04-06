@@ -20,6 +20,12 @@ body{
   color: var(--text-color-light);
 }
 
+nav{
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
 h1 {
   font-family: 'DM Serif Text', serif;
   font-weight: normal;
@@ -61,4 +67,3 @@ img{
   flex-direction: column;
   align-items: center;
 }
-
