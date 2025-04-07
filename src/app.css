@@ -9,6 +9,11 @@
   --accent-color: #ffbe1a;
 }
 
+* {
+  font-family: "Roboto Serif", serif;
+  font-size: x-large;
+}
+
 body{
   display: flex;
   flex-direction: column;
@@ -18,6 +23,18 @@ body{
   margin: 0;
   background-color: var(--background-color);
   color: var(--text-color-light);
+}
+
+main{
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* horizontal */
+  align-items: center;     /* vertical */
+}
+
+main.blur{
+  filter: blur(4px) brightness(0.8);
+  transition: filter 0.3s ease;
 }
 
 nav{
