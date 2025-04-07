@@ -19,7 +19,7 @@
         <li>Test1</li>
         <li>Test2</li>
         <li>Test3</li>
-      </ul>     
+      </ul>
     {/if}
 
   </nav>
