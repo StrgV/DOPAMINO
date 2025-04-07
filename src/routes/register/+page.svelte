@@ -17,11 +17,5 @@
 
 <!-- Fehlermeldung anzeigen -->
 {#if form?.error}
-    <p style="color: red;">{form.error}</p>
+    <p style="color: red">{form.error}</p>
 {/if}
-
-<style>
-    input[type="number"] {
-    width: 196.8px;
-    }
-</style>
