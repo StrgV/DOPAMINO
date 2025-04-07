@@ -9,9 +9,8 @@
 
     {#if open}
       <ul>
-        <li>Eins</li>
-        <li>Zwei</li>
         <li><a href="/register">Registrierung</a></li>
+        <li><a href="https://www.bundesweit-gegen-gluecksspielsucht.de/">Geld Aufladen</a></li>
       </ul>     
     {/if}
 

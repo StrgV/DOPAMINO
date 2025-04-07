@@ -28,12 +28,12 @@ body{
 main{
   display: flex;
   flex-direction: column;
-  justify-content: center; /* horizontal */
-  align-items: center;     /* vertical */
+  justify-content: center;
+  align-items: center;
 }
 
 main.blur{
-  filter: blur(4px) brightness(0.8);
+  filter: blur(4px) brightness(0.7);
   transition: filter 0.3s ease;
 }
 
@@ -73,6 +73,12 @@ input {
   background-color: var(--secondary-color);
   color: var(--text-color-light);
 }
+
+li{
+  margin-bottom: 0.3rem;
+  padding-left: 15px;
+}
+
 
 img{
   padding-left: 10%;
