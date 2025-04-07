@@ -9,6 +9,11 @@
   --accent-color: #ffbe1a;
 }
 
+* {
+  font-family: "Roboto Serif", serif;
+  font-size: x-large;
+}
+
 body{
   display: flex;
   flex-direction: column;
@@ -18,6 +23,18 @@ body{
   margin: 0;
   background-color: var(--background-color);
   color: var(--text-color-light);
+}
+
+main{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+main.blur{
+  filter: blur(4px) brightness(0.7);
+  transition: filter 0.3s ease;
 }
 
 nav{
@@ -45,16 +62,23 @@ button {
   border-radius: 0.5rem;
   background-color: var(--accent-color);
   color: var(--text-color-dark);
+  font-size: medium;
 }
 
 input {
   margin: 0.25rem;
   padding: 0.5rem;
-  width: 15rem;
+  width: 10rem;
   background-clip: padding-box;
   border-radius: 0.5rem;
   background-color: var(--secondary-color);
   color: var(--text-color-light);
+  font-size: medium;
+}
+
+li{
+  margin-bottom: 0.3rem;
+  padding-left: 15px;
 }
 
 img{

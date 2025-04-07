@@ -15,9 +15,8 @@
     
 </form>
 
-<br><br>
 <p>Noch kein Account?</p>
-<button style="padding-left: 10px;" on:click={() => window.location.href = '/register'}>Sign up</button>
+<button on:click={() => window.location.href = '/register'}>Sign up</button>
 
 
 <!-- Fehlermeldung anzeigen -->
