@@ -5,22 +5,12 @@ import { redirect, fail } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import bcrypt from 'bcrypt';
 
-console.log('Login action called'); // Debugging output
-
-
-
-// if the user is already logged in, redirect to the casino page
-// export async function load({ cookies, locals }) {
-//   if (locals.user) {
-//     return redirect(303, '/casino');
-//   }
-//   // otherwise return the root page
-//   return {};
-// }
-
 
 export const actions: Actions = {
   login: async ({ request, cookies }) => {
+    
+    console.log('Login action called'); // Debugging output
+
     const form = await request.formData();
     const username = form.get('username') as string;
     const password = form.get('password') as string;
@@ -55,6 +45,14 @@ export const actions: Actions = {
     }
     
     console.log('Login attempt:', { username });
+
+    const oldSessionId = cookies.get('session_id'); // Retrieve the old session ID from the cookie
+    if(oldSessionId) {
+      // Delete the old session from the database
+      await db.delete(session).where(eq(session.id, oldSessionId)).execute();
+      // Delete the old session cookie
+      cookies.delete('session_id', { path: '/' });
+    }
 
     const sessionId = crypto.randomUUID(); // Create a new session ID
     const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 1 day expiration
