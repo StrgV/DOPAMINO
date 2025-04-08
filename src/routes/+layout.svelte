@@ -1,27 +1,14 @@
 <script lang="ts">
 	import '../app.css';
-  import {Hamburger} from 'svelte-hamburgers';
 	let { children } = $props();
-
-  let open: boolean = $state(false);
   </script>
   
   <svelte:head>
-  <!-- embed fonts globally -->
-  	<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text&display=swap" rel="stylesheet" />
+    <!-- embed fonts globally -->
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Serif+Text:ital@0;1&family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&display=swap');
+    </style>
+
   </svelte:head>
   
-  <nav>
-    <Hamburger bind:open type="squeeze" title="Menü" --color="var(--secondary-color)" ariaControls="nav"/>
-
-    {#if open}
-      <ul>
-        <li>Test1</li>
-        <li>Test2</li>
-        <li>Test3</li>
-      </ul>     
-    {/if}
-
-  </nav>
-
 {@render children()}
