@@ -1,14 +1,16 @@
 import { db } from '$lib/server/db';
-import { user } from '$lib/server/db/schema';
+import { user, session } from '$lib/server/db/schema';
 import type { Actions } from './$types';
 import { redirect, fail } from '@sveltejs/kit';
-import { eq, and } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 import bcrypt from 'bcrypt';
 
-console.log('Login action called'); // Debugging output
 
 export const actions: Actions = {
-  login: async ({ request }) => {
+  login: async ({ request, cookies }) => {
+    
+    console.log('Login action called'); // Debugging output
+
     const form = await request.formData();
     const username = form.get('username') as string;
     const password = form.get('password') as string;
@@ -42,8 +44,36 @@ export const actions: Actions = {
       });
     }
     
-    console.log('Login attempt:', { username, password });
+    console.log('Login attempt:', { username });
 
+    const oldSessionId = cookies.get('session_id'); // Retrieve the old session ID from the cookie
+    if(oldSessionId) {
+      // Delete the old session from the database
+      await db.delete(session).where(eq(session.id, oldSessionId)).execute();
+      // Delete the old session cookie
+      cookies.delete('session_id', { path: '/' });
+    }
+
+    const sessionId = crypto.randomUUID(); // Create a new session ID
+    const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 1 day expiration
+
+    await db.insert(session).values({
+      id: sessionId,
+      userId: userRecord[0].id,
+      expiresAt: expiresAt,
+    }).execute();
+
+    // Set the session cookie
+    cookies.set('session_id', sessionId, {
+      httpOnly: true, // Cookie is only accessible via HTTP
+      path: '/', // Cookie applies to all pages
+      maxAge: 60 * 60 * 24, // Cookie expires after 1 day
+      secure: true,
+      sameSite: 'strict', // CSRF protection
+    });
+    
+    console.log('Session created:', { sessionId, expiresAt });
+    
     // Redirect to /casino on successful login
     throw redirect(303, '/casino');
   }
