@@ -1,6 +1,5 @@
 <script lang="ts">
     import logo from "$lib/assets/DOPAMINO_Text_Logo.svg";
-    // export let form: { error?: string }
     export let form: { error?: string; values?: { username?: string; email?: string } };
 </script>
 
@@ -9,7 +8,6 @@
 
 <form method="POST" action="?/login">
     <input name="username" placeholder="Username" value="{form?.values?.username}" />
-    <!-- <input name="email" type="email" placeholder="E-Mail" required /> -->
     <input name="password" type="password" placeholder="Passwort" required />
     <button type="submit">Sign in</button>
     

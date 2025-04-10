@@ -9,6 +9,7 @@
 
     {#if open}
       <ul>
+        <li><a href="/casino/black-jack">Black Jack</a></li>
         <li><a href="/register">Registrierung</a></li>
         <li><a href="https://www.bundesweit-gegen-gluecksspielsucht.de/">Geld Aufladen</a></li>
       </ul>     

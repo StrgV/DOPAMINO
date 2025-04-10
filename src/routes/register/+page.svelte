@@ -1,5 +1,12 @@
 <script lang="ts">
-    export let form: { error?: string; values?: { forename?: string; name?: string; age?: number; username?: string; email?: string } };
+    export let form: { error?: string; values?: { forename?: string; name?: string; birthday?: string; username?: string; email?: string } };
+
+    /* Date calculations for the birthday input */
+    let today:Date = new Date();
+    const maxDate:string = today.toISOString().split('T')[0];
+    let earliestDate:Date = new Date();
+    earliestDate.setFullYear(today.getFullYear() - 120);
+    const minDate:string = earliestDate.toISOString().split('T')[0];
 </script>
 
 <h1>Register</h1>
@@ -7,7 +14,7 @@
     <div class="column">
         <input name="forename" placeholder="Vorname" value="{form?.values?.forename}" required />
         <input name="name" placeholder="Nachname" value="{form?.values?.name}" required />
-        <input name="age" placeholder="Alter" type="number" min="18" max="120" value="{form?.values?.age}" required />
+        <input name="birthday" placeholder="Geburtstag" type="date" min="{minDate}" max="{maxDate}" value="{form?.values?.birthday}" required /> <!-- TODO: change age to birthday -->
         <input name="username" placeholder="Benutzername" value="{form?.values?.username}" required />
         <input name="email" type="email" placeholder="E-Mail" value="{form?.values?.email}" required />
         <input name="password" type="password" placeholder="Passwort" required />
