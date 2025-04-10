@@ -10,7 +10,7 @@ export const user = sqliteTable('user', {
     email: text('email').notNull(),
     password: text('password').notNull(),
     balance: integer('balance').default(5000),
-    age: integer('age')
+    age: integer('age') // TODO: change Age to Birthday
 });
 
 // session table
