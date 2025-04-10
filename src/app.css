@@ -26,10 +26,12 @@ body{
 }
 
 main{
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  z-index: 1;
 }
 
 main.blur{
@@ -41,6 +43,7 @@ nav{
   position: absolute;
   top: 10px;
   left: 10px;
+  z-index: 9999;
 }
 
 h1 {
@@ -84,6 +87,7 @@ li{
 img{
   padding-left: 10%;
   padding-right: 10%;
+  pointer-events: none;
 }
 
 .column{

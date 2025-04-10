@@ -40,14 +40,13 @@
     <Hamburger bind:open type="squeeze" title="Menü" --color="var(--secondary-color)" ariaControls="nav"/>
 
     {#if open}
-      <ul>
-        <li><a href="/casino/black-jack">Black Jack</a></li>
-        <li><a href="/casino">Home</a></li>
-        <li><a href="/register">Registrierung</a></li>
-        <li><a href="https://www.bundesweit-gegen-gluecksspielsucht.de/">Geld Aufladen</a></li>
-      </ul>     
+        <ul>
+          <li><a href="/casino/black-jack">Black Jack</a></li>
+          <li><a href="/casino">Home</a></li>
+          <li><a href="/register">Registrierung</a></li>
+          <li><a href="https://www.bundesweit-gegen-gluecksspielsucht.de/">Geld Aufladen</a></li>
+        </ul>     
     {/if}
-
   </nav>
 
   <main class:blur={open}>
