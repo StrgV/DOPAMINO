@@ -68,8 +68,6 @@
             else if (playerSum === 21) {
                 message = 'Blackjack! You win!'; // Player wins with a sum of 21
                 gameOver = true; 
-            } else {
-                message = 'Hit or Stand?'; // Prompt for next action
             }
         }
     }
@@ -130,11 +128,6 @@
         align-items: center;
         font-family: sans-serif;
         margin-top: 2rem;
-    }
-
-    .hand {
-        margin: 1rem;
-        font-size: 1.5rem;
     }
 
     .buttons {
