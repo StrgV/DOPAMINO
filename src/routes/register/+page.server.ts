@@ -13,18 +13,19 @@ export const actions: Actions = {
   register: async ({ request }) => {
     console.log('Register action called'); // Debugging output
     const form = await request.formData();
-    const forename = form.get('forename') as string;
-    const name = form.get('name') as string;
-    const age = parseInt(form.get('age') as string); // Convert to number
+    const forename:string = form.get('forename') as string;
+    const name:string = form.get('name') as string;
+    const birthdayString:string = form.get('birthday') as string; // birthday as string (YYYY-MM-DD)
+    const birthdayTimestamp:number = new Date(birthdayString).getTime(); // birthday timestamp for the database
     const username = form.get('username') as string;
     const email = form.get('email') as string;
     const password = form.get('password') as string;
 
     // Validation: Check if all fields are filled
-    if (!forename || !name || !username || !email || !password) {
+    if (!forename || !name || !username || !birthdayString || !email || !password) {
       return fail<FailResponse>(400, {
         error: 'Alle Felder sind erforderlich!',
-        values: { forename, name, age, username, email }
+        values: { forename, name, birthday: birthdayTimestamp, username, email }
       });
       
     }
@@ -40,19 +41,29 @@ export const actions: Actions = {
     if (existingUser.length > 0) {
       return fail<FailResponse>(400, {
         error: 'Benutzername ist bereits vergeben!',
-        values: { forename, name, age, username, email }
+        values: { forename, name, birthday: birthdayTimestamp, username, email }
       });
     }
     
-    if(!age || isNaN(age) || age < 18) {
-      return fail<FailResponse>(400, {
-        error: 'Das Alter muss mindestens 18 Jahre betragen!',
-        values: { forename, name, age, username, email }
-      });
+    // Check if age is over 18
+    const today = new Date();
+    const birthdayDate = new Date(birthdayString);
+    let age:number = today.getFullYear() - birthdayDate.getFullYear();
+    const monthDiff:number = today.getMonth() - birthdayDate.getMonth();
+
+    if (monthDiff < 0 || monthDiff === 0 && today.getDate() < birthdayDate.getDate()) {
+      age--; // Correct age if needed
     }
 
+    if (isNaN(birthdayDate.getTime()) || age < 18) {
+      return fail<FailResponse>(400, {
+        error: 'Das Alter muss mindestens 18 Jahre betragen!',
+        values: { forename, name, birthday: birthdayTimestamp, username, email }
+    });
+  }
+
     
-    console.log('Inserting from form ', {forename, name, age, username, email, password}); // Debugging output
+    console.log('Inserting from form ', {forename, name, birthday: birthdayTimestamp, username, email, password}); // Debugging output
     
     // Password validation
     const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*\d).{8,}$/; // At least 8 characters, at least 1 letter and 1 number
@@ -63,7 +74,7 @@ export const actions: Actions = {
       console.log('Password is invalid');
       return fail<FailResponse>(400, {
       error: 'Das Passwort muss mindestens 8 Zeichen lang sein und mindestens einen Großbuchstaben, einen Kleinbuchstaben, eine Zahl und ein Sonderzeichen enthalten.',
-      values: { forename, name, age, username, email }
+      values: { forename, name, birthday: birthdayTimestamp, username, email }
       });
     }
 
@@ -80,7 +91,7 @@ export const actions: Actions = {
       email,
       password: hashedPassword, // Store hashed password
       balance: 5000, // Default balance
-      age: 18 // Default age
+      birthday: new Date(birthdayTimestamp) // Default birthday
     });
     
     // Redirect after successful registration
