@@ -26,10 +26,12 @@ body{
 }
 
 main{
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  z-index: 1;
 }
 
 main.blur{
@@ -41,6 +43,7 @@ nav{
   position: absolute;
   top: 10px;
   left: 10px;
+  z-index: 9999;
 }
 
 h1 {
@@ -81,13 +84,23 @@ li{
   padding-left: 15px;
 }
 
-img{
-  padding-left: 10%;
-  padding-right: 10%;
-}
-
 .column{
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.logo{
+  padding-left: 10%;
+  padding-right: 10%;
+  pointer-events: none;
+}
+
+.profile{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 15px;
+  max-width: 2.6rem;
+  z-index: 9998;
 }

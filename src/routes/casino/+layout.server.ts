@@ -36,7 +36,7 @@ export async function load({ cookies }) {
         throw redirect(303, '/'); // Redirect if user not found
     }
 
-    console.log('Loaded user:', userRecord[0].username, 'Balance:', userRecord[0].balance);
+    console.log('Loaded user:', userRecord[0].username, 'Balance:', userRecord[0].balance); // debugging
     
     return {
         username: userRecord[0].username,
