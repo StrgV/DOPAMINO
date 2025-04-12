@@ -49,13 +49,13 @@ nav{
 h1 {
   font-family: 'DM Serif Text', serif;
   font-weight: normal;
-  font-size: 5rem;
+  font-size: clamp(2rem, 5vw, 7rem);
 }
 
 h2 {
   font-family: 'DM Serif Text', serif;
   font-weight: normal;
-  font-size: 2rem;
+  font-size: clamp(1rem, 3vw, 2rem);
 }
 
 button {
