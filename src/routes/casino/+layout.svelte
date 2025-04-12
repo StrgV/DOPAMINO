@@ -41,7 +41,7 @@
     <Hamburger bind:open type="squeeze" title="Menü" --color="var(--secondary-color)" ariaControls="nav"/>
 
     {#if open}
-        <ul>
+        <ul class="nav-list">
           <li><a href="/casino/black-jack/">Black Jack</a></li>
           <li><a href="/casino/">Home</a></li>
           <li><a href="/../">Registrierung</a></li>
