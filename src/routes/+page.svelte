@@ -3,7 +3,7 @@
     export let form: { error?: string; values?: { username?: string; email?: string } };
 </script>
 
-<img src="{logo}" alt="Logo of DOPAMINO" />
+<img src="{logo}" alt="Logo of DOPAMINO" class="logo" />
 <h2 class="italic">~wir sind dein Casino</h2>
 
 <form method="POST" action="?/login">
