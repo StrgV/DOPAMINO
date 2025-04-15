@@ -16,14 +16,14 @@
     let dealerSum: number = 0; 
     let gameOver: boolean = false; 
     let message: string = ''; 
-    // user from database
-    let user = '';
-    let balance: number = 0; 
-    
-    // let bet: number = 0; // Variable to hold the player's bet amount
-    // let betAmount: number = 0; // Variable to hold the bet amount input by the player
-    
+    let balance: number = data.balance;
+    let bet_amount: number = 5; // Default bet amount
+    let bet_amounts: number[] = [5, 10, 20, 50, 100, 200, 500, 1000, 2500, 5000, balance]; // Possible bet amounts
+
     let reshuffleAfterRound = false;
+    let betPlaced: boolean = false; // Track if a bet has been placed
+
+    $: bet_amounts[bet_amounts.length - 1] = balance; // Ensure the last value in bet_amounts is always the current balance
 
     function drawCard(): Card {
         // After reaching last third of the deck -> shuffle the deck
@@ -33,22 +33,27 @@
         return deck.pop()!;
     }
 
-
     function startGame() {
         gameOver = false;
         message = '';
+        betPlaced = false; // Reset betPlaced for a new game
+        playerHand = [];
+        dealerHand = [];
+        playerSum = 0;
+        dealerSum = 0;
 
-        // Nur bei der ersten Runde oder nach Schneidekarte neu mischen
+        // Shuffle the deck if necessary
         if (deck.length === 0 || reshuffleAfterRound) {
             deck = createDeck();
             reshuffleAfterRound = false;
         }
+    }
 
+    function revealCards() {
         playerHand = [drawCard(), drawCard()];
         dealerHand = [drawCard()];
         calculateSums();
     }
-
 
     function calculateSums() {
         playerSum = calculateSum(playerHand); // Calculate the sum of the player's hand
@@ -56,6 +61,10 @@
     }
 
     function hit() {
+        if (!betPlaced) {
+            message = 'You must place a bet before drawing a card!';
+            return;
+        }
         if (!gameOver) {
             const newCard = drawCard();
             playerHand = [...playerHand, newCard]; // force a new reference (push wasn't reactive)
@@ -66,6 +75,7 @@
                 gameOver = true; 
             }
             else if (playerSum === 21) {
+                adjustBalance(+bet_amount * 2); // Update balance when winning
                 message = 'Blackjack! You win!'; // Player wins with a sum of 21
                 gameOver = true; 
             }
@@ -73,6 +83,10 @@
     }
     
     function stand() {
+        if (!betPlaced) {
+            message = 'You must place a bet before standing!';
+            return;
+        }
         while (dealerSum < 17) {
             dealerHand.push(drawCard()); // Dealer hits until >= 17
             calculateSums(); // Recalculate the sums the dealer hits
@@ -84,20 +98,22 @@
         if (playerSum > 21) {
             message = 'You busted! Dealer wins!';
         } else if (dealerSum > 21) {
+            adjustBalance(+bet_amount * 2); // Update balance when winning
             message = 'Dealer busted! You win!';
         } else if (playerSum === 21 && playerHand.length === 2) {
-            message = 'Blackjack! You win!';
+            // case is already satisfied in hit()
         } else if (dealerSum === 21 && dealerHand.length === 2) {
             message = 'Dealer has Blackjack! Dealer wins!';
         } else if (playerSum > dealerSum) {
+            adjustBalance(+bet_amount * 2); // Update balance when winning
             message = 'You win!';
         } else if (playerSum < dealerSum) {
             message = 'Dealer wins!';
         } else if (playerSum === dealerSum) {
+            adjustBalance(+bet_amount); // Update balance for a tie
             message = 'It\'s a tie!';
         }
 
-        // Update the balance based on the outcome
     }
     
     // reset clears everything and starts a new game
@@ -109,16 +125,73 @@
         startGame();
     }
 
+    function bet() {
+        if (balance < bet_amount) {
+            message = 'Insufficient balance!'; // Prevent betting if balance is too low
+            return;
+        }
+
+        adjustBalance(-bet_amount); // Update balance when placing a bet
+        betPlaced = true; // Mark the bet as placed
+        revealCards(); // Reveal the cards and calculate sums
+    }
+
+    function increaseBet() {
+        const currentIndex = bet_amounts.indexOf(bet_amount);
+        if (currentIndex < bet_amounts.length - 1) {
+            bet_amount = bet_amounts[currentIndex + 1];
+        }
+    }
+
+    function decreaseBet() {
+        const currentIndex = bet_amounts.indexOf(bet_amount);
+        if (currentIndex > 0) {
+            bet_amount = bet_amounts[currentIndex - 1];
+        }
+    }
+
+    // update balance in the database
+    async function adjustBalance(amount: number) {
+        balance += amount;
+        await updateBalanceOnServer(); // speichert's in der DB
+    }
+
+    async function updateBalanceOnServer() {
+        const res = await fetch('/api/update-balance', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                username: data.username,
+                balance: balance
+            })
+        });
+
+    const result = await res.json();
+    if (!result.success) {
+        console.error('Balance-Update fehlgeschlagen:', result.error);
+    }
+}
+
+// --------------------------- admin / test function -----------------------------
+// Reset balance to the initial value
+function resetBalance() {
+    async function resetBalance() {
+        balance = 5000;
+        await updateBalanceOnServer(); // speichert's in der DB
+    }
+    resetBalance();
+}
+// ---------------------------
+
     onMount(startGame); // Start the game when the component mounts
 </script>
 
 <h1>BLACK JACK</h1>
 <p>Welcome to the Black Jack page!</p>
 
-<!-- shwo the username -->
+<!-- show the username -->
 <p>Logged in as: {data.username}</p>
-<p>Balance: {data.balance} €</p>
-
+<p>Balance: {balance} €</p>
 
 
 <style>
@@ -129,7 +202,6 @@
         font-family: sans-serif;
         margin-top: 2rem;
     }
-
     .buttons {
         display: flex;
         justify-content: space-between;
@@ -142,7 +214,6 @@
         min-width: 80px;
     }
     .balance {
-        position: absolute;
         bottom: 10px;
         left: 10px;
         font-weight: bold;
@@ -179,15 +250,20 @@
       <div class="dealer-hand">
         <strong>Dealer:</strong><br />
         <div class="card-row">
-            {#if gameOver}
-                {#each dealerHand as c}
-                    <span class="card">{c.value}{c.suit}</span>
-                {/each}
-            {:else}
-                {#if dealerHand[0]}
-                    <span class="card">{dealerHand[0].value}{dealerHand[0].suit}</span>
-                    <span class="card">🂠</span> <!-- verdeckte Karte -->
+            {#if betPlaced}
+                {#if gameOver}
+                    {#each dealerHand as c}
+                        <span class="card">{c.value}{c.suit}</span>
+                    {/each}
+                {:else}
+                    {#if dealerHand[0]}
+                        <span class="card">{dealerHand[0].value}{dealerHand[0].suit}</span>
+                        <span class="card">🂠</span> <!-- verdeckte Karte -->
+                    {/if}
                 {/if}
+            {:else}
+                <span class="card">🂠</span>
+                <span class="card">🂠</span>
             {/if}
         </div>
         {#if gameOver}
@@ -196,24 +272,41 @@
     </div>
 
     <div class="buttons">
-        <button on:click={hit} disabled={gameOver}>Karte</button>
+        <button on:click={hit} disabled={gameOver || !betPlaced}>Karte</button>
         
         <div class="player-hand">
             <strong>Spieler:</strong><br />
             <div class="card-row">
-                {#each playerHand as c}
-                    <span class="card">{c.value}{c.suit}</span>
-                {/each}
+                {#if betPlaced}
+                    {#each playerHand as c}
+                        <span class="card">{c.value}{c.suit}</span>
+                    {/each}
+                {:else}
+                    <span class="card">🂠</span>
+                    <span class="card">🂠</span>
+                {/if}
             </div>
-            <div><strong>Summe:</strong> {playerSum}</div>
+            {#if betPlaced}
+                <div><strong>Summe:</strong> {playerSum}</div>
+            {/if}
         </div>
     
-        <button on:click={stand} disabled={gameOver}>Stand</button>
+        <button on:click={stand} disabled={gameOver || !betPlaced}>Stand</button>
     </div>
     
 
     <p>{message}</p>
-    <div class="balance">Bank: ${balance}</div>
+    <div class="buttons">
+        <label for="bet">Setze: </label>
+        <button on:click={decreaseBet} disabled={bet_amount === bet_amounts[0] || betPlaced}>-</button>
+        <span id="bet">${bet_amount}</span>
+        <button on:click={increaseBet} disabled={bet_amount === bet_amounts[bet_amounts.length - 1] || betPlaced}>+</button>
+        <button on:click={bet} disabled={gameOver || betPlaced}>Setzen</button>
+    </div>
+    
+    <div class="balance">
+        Aktueller Kontostand: ${balance} €
+    </div>
 
     {#if gameOver}
         <button on:click={startGame}>Neue Runde</button>
@@ -221,4 +314,19 @@
     {#if reshuffleAfterRound}
         <p>Deck wird nach der Runde neu gemischt...</p>
     {/if}
+
+    <div class="buttons">
+        <button on:click={resetBalance} disabled={gameOver}>Reset Balance</button>
+    </div>  
+
 </div>
+
+
+<!-- TODO: 
+ - add a global store for variables to ensure having the same state in all components
+    - add a global store for the balance to ensure having the same state in all components
+    - 
+ 
+
+
+-->
