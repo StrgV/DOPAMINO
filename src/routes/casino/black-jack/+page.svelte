@@ -1,13 +1,32 @@
 <script lang="ts">
+    import { onMount } from 'svelte';
+    import { createDeck, calculateSum, type Card } from './blackjack';
+    import { balanceStore } from '$lib/stores/balanceStore'; // Import the global balance store
+    import { get } from 'svelte/store';
 
     export let data: {
         username: string;
         balance: number; 
-    }
+    };
 
-    import { onMount } from 'svelte'; // similar to $effect but runs only once
-    import { createDeck, calculateSum, type Card } from './blackjack'; // Import the functions and type Card from blackjack logic
-    
+    let balance = 0;
+
+    onMount(async () => {
+        const res = await fetch('/api/get-balance', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username: data.username })
+        });
+        const result = await res.json();
+        if (result.success) {
+            balanceStore.set(result.balance); // Update the store with the latest balance
+        } else {
+            console.error('Error fetching balance:', result.error);
+        }
+    });
+
+    $: balanceStore.subscribe(value => balance = value); // Reactively update balance
+
     // necessary variables for the game
     let deck: Card[] = []; 
     let playerHand: Card[] = [];
@@ -16,7 +35,7 @@
     let dealerSum: number = 0; 
     let gameOver: boolean = false; 
     let message: string = ''; 
-    let balance: number = data.balance;
+    balanceStore.set(data.balance); // Initialize the store with the passed balance
     let bet_amount: number = 5; // Default bet amount
     let bet_amounts: number[] = [5, 10, 20, 50, 100, 200, 500, 1000, 2500, 5000, balance]; // Possible bet amounts
 
@@ -76,6 +95,7 @@
             }
             else if (playerSum === 21) {
                 adjustBalance(+bet_amount * 2); // Update balance when winning
+                balanceStore.set(balance); // Update the store
                 message = 'Blackjack! You win!'; // Player wins with a sum of 21
                 gameOver = true; 
             }
@@ -99,6 +119,7 @@
             message = 'You busted! Dealer wins!';
         } else if (dealerSum > 21) {
             adjustBalance(+bet_amount * 2); // Update balance when winning
+            balanceStore.set(balance); // Update the store
             message = 'Dealer busted! You win!';
         } else if (playerSum === 21 && playerHand.length === 2) {
             // case is already satisfied in hit()
@@ -106,11 +127,13 @@
             message = 'Dealer has Blackjack! Dealer wins!';
         } else if (playerSum > dealerSum) {
             adjustBalance(+bet_amount * 2); // Update balance when winning
+            balanceStore.set(balance); // Update the store
             message = 'You win!';
         } else if (playerSum < dealerSum) {
             message = 'Dealer wins!';
         } else if (playerSum === dealerSum) {
             adjustBalance(+bet_amount); // Update balance for a tie
+            balanceStore.set(balance); // Update the store
             message = 'It\'s a tie!';
         }
 
@@ -132,6 +155,7 @@
         }
 
         adjustBalance(-bet_amount); // Update balance when placing a bet
+        balanceStore.set(balance); // Update the store
         betPlaced = true; // Mark the bet as placed
         revealCards(); // Reveal the cards and calculate sums
     }
@@ -153,6 +177,7 @@
     // update balance in the database
     async function adjustBalance(amount: number) {
         balance += amount;
+        balanceStore.set(balance); // Update the store
         await updateBalanceOnServer(); // speichert's in der DB
     }
 
@@ -166,17 +191,18 @@
             })
         });
 
-    const result = await res.json();
-    if (!result.success) {
-        console.error('Balance-Update fehlgeschlagen:', result.error);
+        const result = await res.json();
+        if (!result.success) {
+            console.error('Balance update failed:', result.error);
+        }
     }
-}
 
 // --------------------------- admin / test function -----------------------------
 // Reset balance to the initial value
 function resetBalance() {
     async function resetBalance() {
         balance = 5000;
+        balanceStore.set(balance); // Update the store
         await updateBalanceOnServer(); // speichert's in der DB
     }
     resetBalance();
@@ -326,7 +352,4 @@ function resetBalance() {
  - add a global store for variables to ensure having the same state in all components
     - add a global store for the balance to ensure having the same state in all components
     - 
- 
-
-
--->
+  -->
