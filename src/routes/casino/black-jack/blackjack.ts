@@ -5,7 +5,7 @@ export type Card = {
 
 export function createDeck(deckCount = 2): Card[] {
     const suits: Card['suit'][] = ['♥️', '♦️', '♣️', '♠️'];
-    const values: Card['value'][] = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+    const values: Card['value'][] = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'B', 'Q', 'K', 'A'];
     let deck: Card[] = [];
 
     // Erstelle 2 vollständige Decks
@@ -35,7 +35,7 @@ export function calculateSum(hand: Card[]): number {
         if (card.value === 'A') {
             sum += 11;
             aces++;
-        } else if (['K', 'Q', 'J'].includes(card.value)) {
+        } else if (['K', 'Q', 'B'].includes(card.value)) {
             sum += 10;
         } else {
             sum += parseInt(card.value, 10);
