@@ -1,21 +1,7 @@
 <script lang="ts">
     // export let form: { error?: string; values?: { forename?: string; name?: string; birthday?: string; username?: string; email?: string } };
 
-    interface registerProps{
-        error: string,
-        values: {
-            forename: string,
-            name: string,
-            birthday: string,
-            username: string,
-            email: string
-        }
-        
-    }
-
-    let allProps: registerProps = $props();
-
-    let {error, values} = allProps;
+       let {error, values} = $props();
     
 
     /* Date calculations for the birthday input */
