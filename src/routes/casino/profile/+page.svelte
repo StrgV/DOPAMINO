@@ -19,9 +19,7 @@
         }
     });
 
-    $effect( () => {
-        balanceStore.subscribe(value => balance = value); 
-     }); 
+    balanceStore.subscribe(value => balance = value); 
 </script>
 
 <p>Logged in as: {data.username}</p>
