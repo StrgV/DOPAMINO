@@ -1,6 +1,5 @@
 <script lang="ts">
     import logo from "$lib/assets/DOPAMINO_Text_Logo.svg";
-    // export let form: { error?: string; values?: { username?: string; email?: string } };
 
     let { error, values } = $props();
 </script>

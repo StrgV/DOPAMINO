@@ -2,14 +2,10 @@
     import { onMount } from 'svelte';
     import { createDeck, calculateSum, type Card } from './blackjack';
     import { balanceStore } from '$lib/stores/balanceStore'; // Import the global balance store
-    import { get } from 'svelte/store';
 
-    export let data: {
-        username: string;
-        balance: number; 
-    };
+    let { data } = $props();
 
-    let balance = 0;
+    let balance = $state(0);
 
     onMount(async () => {
         const res = await fetch('/api/get-balance', {
@@ -25,24 +21,25 @@
         }
     });
 
-    $: balanceStore.subscribe(value => balance = value); // Reactively update balance
+    balanceStore.subscribe(value => balance = value); // Reactively update balance
 
     // necessary variables for the game
-    let deck: Card[] = []; 
-    let playerHand: Card[] = [];
-    let dealerHand: Card[] = [];
-    let playerSum: number = 0; 
-    let dealerSum: number = 0; 
-    let gameOver: boolean = false; 
-    let message: string = ''; 
+    let deck: Card[] = $state([]); 
+    let playerHand: Card[] = $state([]);
+    let dealerHand: Card[] = $state([]);
+    let playerSum: number = $state(0); 
+    let dealerSum: number = $state(0); 
+    let gameOver: boolean = $state(false); 
+    let message: string = $state(''); 
     balanceStore.set(data.balance); // Initialize the store with the passed balance
-    let bet_amount: number = 5; // Default bet amount
-    let bet_amounts: number[] = [5, 10, 20, 50, 100, 200, 500, 1000, 2500, 5000, balance]; // Possible bet amounts
+    let bet_amount: number = $state(5); // Default bet amount
+    // let bet_amounts: number[] = $state([5, 10, 20, 50, 100, 200, 500, 1000, 2500, 5000, balance]); // Possible bet amounts
+    let bet_amounts: number[] = $state([5, 10, 20, 50, 100, 200, 500, 1000, 2500, 5000]); // Possible bet amounts
 
-    let reshuffleAfterRound = false;
-    let betPlaced: boolean = false; // Track if a bet has been placed
+    let reshuffleAfterRound = $state(false);
+    let betPlaced: boolean = $state(false); // Track if a bet has been placed
 
-    $: bet_amounts[bet_amounts.length - 1] = balance; // Ensure the last value in bet_amounts is always the current balance
+    bet_amounts[bet_amounts.length - 1] = balance; // Ensure the last value in bet_amounts is always the current balance
 
     function drawCard(): Card {
         // After reaching last third of the deck -> shuffle the deck
@@ -298,7 +295,7 @@ function resetBalance() {
     </div>
 
     <div class="buttons">
-        <button on:click={hit} disabled={gameOver || !betPlaced}>Karte</button>
+        <button onclick={hit} disabled={gameOver || !betPlaced}>Karte</button>
         
         <div class="player-hand">
             <strong>Spieler:</strong><br />
@@ -317,17 +314,17 @@ function resetBalance() {
             {/if}
         </div>
     
-        <button on:click={stand} disabled={gameOver || !betPlaced}>Stand</button>
+        <button onclick={stand} disabled={gameOver || !betPlaced}>Stand</button>
     </div>
     
 
     <p>{message}</p>
     <div class="buttons">
         <label for="bet">Setze: </label>
-        <button on:click={decreaseBet} disabled={bet_amount === bet_amounts[0] || betPlaced}>-</button>
+        <button onclick={decreaseBet} disabled={bet_amount === bet_amounts[0] || betPlaced}>-</button>
         <span id="bet">${bet_amount}</span>
-        <button on:click={increaseBet} disabled={bet_amount === bet_amounts[bet_amounts.length - 1] || betPlaced}>+</button>
-        <button on:click={bet} disabled={gameOver || betPlaced}>Setzen</button>
+        <button onclick={increaseBet} disabled={bet_amount === bet_amounts[bet_amounts.length - 1] || betPlaced}>+</button>
+        <button onclick={bet} disabled={gameOver || betPlaced}>Setzen</button>
     </div>
     
     <div class="balance">
@@ -335,14 +332,14 @@ function resetBalance() {
     </div>
 
     {#if gameOver}
-        <button on:click={startGame}>Neue Runde</button>
+        <button onclick={startGame}>Neue Runde</button>
     {/if}
     {#if reshuffleAfterRound}
         <p>Deck wird nach der Runde neu gemischt...</p>
     {/if}
 
     <div class="buttons">
-        <button on:click={resetBalance} disabled={gameOver}>Reset Balance</button>
+        <button onclick={resetBalance} disabled={gameOver}>Reset Balance</button>
     </div>  
 
 </div>

@@ -3,11 +3,9 @@
     import { balanceStore } from '$lib/stores/balanceStore';
     import { onMount } from 'svelte';
 
-    export let data: {
-        username: string;
-    };
+    let {data} = $props();
 
-    let balance = 0;
+    let balance = $state(0);
 
     onMount(async () => {
         const res = await fetch('/api/get-balance', {
@@ -21,7 +19,7 @@
         }
     });
 
-    $: balanceStore.subscribe(value => balance = value); // Reactively update balance
+    balanceStore.subscribe(value => balance = value); // Reactively update balance
 </script>
 
 <img src="{logo}" alt="Logo of DOPAMINO" class="logo"/>
