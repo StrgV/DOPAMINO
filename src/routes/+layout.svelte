@@ -1,7 +1,27 @@
 <script lang="ts">
 	import '../app.css';
-	let { children } = $props();
-  </script>
+	import { balanceStore } from '$lib/stores/balanceStore';
+  import { onMount } from 'svelte';
+  
+  // let { children } = $props();
+  
+  const props = $props<{
+    children: any; 
+    data?: {
+      balance?: number;
+      username?: string;
+    };
+  }>();
+
+  // Initialize the store with the data from the server on initial load
+	onMount(() => {
+		if (props.data && props.data.balance !== undefined) {
+			balanceStore.set(props.data.balance);
+			console.log('Set initial balance in store:', props.data.balance);
+		}
+	});
+
+</script>
   
   <svelte:head>
     <!-- embed fonts globally -->
@@ -11,4 +31,4 @@
 
   </svelte:head>
   
-{@render children()}
+{@render props.children()}

@@ -1,26 +1,21 @@
 <script lang="ts">
-    import { balanceStore } from '$lib/stores/balanceStore';
-    import { onMount } from 'svelte';
-
+    import { balanceStore } from "$lib/stores/balanceStore";
     //export let data: { username: string; };
     let { data } = $props()
 
-    let balance = $state(0);
+    // Use $state to track the balance from the store
+    let localBalance = $state(data.balance);
 
-    onMount(async () => {
-        const res = await fetch('/api/get-balance', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username: data.username })
+
+    // Subscribe to the balance store
+    $effect(() => {
+        const resubscribe = balanceStore.subscribe(value => {
+            localBalance = value;
         });
-        const result = await res.json();
-        if (result.success) {
-            balanceStore.set(result.balance); // Update the store with the latest balance
-        }
+        
+        return resubscribe;
     });
-
-    balanceStore.subscribe(value => balance = value); 
 </script>
 
 <p>Logged in as: {data.username}</p>
-<p>Balance: {balance} €</p>
+<p>Balance: {localBalance} €</p>

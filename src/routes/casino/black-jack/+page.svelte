@@ -1,48 +1,40 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import { createDeck, calculateSum, type Card } from './blackjack';
-    import { balanceStore } from '$lib/stores/balanceStore'; // Import the global balance store
-    import { get } from 'svelte/store';
+    import { balanceStore, updateBalance } from '$lib/stores/balanceStore';
 
-    export let data: {
-        username: string;
-        balance: number; 
-    };
-
-    let balance = 0;
-
-    onMount(async () => {
-        const res = await fetch('/api/get-balance', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username: data.username })
+    let { data } = $props();
+    
+    // Use both local state and subscribe to the store
+    let localBalance = $state(data.balance);
+    
+    // Initialize the store with the data from the server
+    onMount(() => {
+        balanceStore.set(data.balance);
+        
+        // Subscribe to the store to keep local balance in sync
+        const unsubscribe = balanceStore.subscribe(value => {
+            localBalance = value;
         });
-        const result = await res.json();
-        if (result.success) {
-            balanceStore.set(result.balance); // Update the store with the latest balance
-        } else {
-            console.error('Error fetching balance:', result.error);
-        }
+        
+        return unsubscribe; // Clean up subscription when component unmounts
     });
 
-    $: balanceStore.subscribe(value => balance = value); // Reactively update balance
 
     // necessary variables for the game
-    let deck: Card[] = []; 
-    let playerHand: Card[] = [];
-    let dealerHand: Card[] = [];
-    let playerSum: number = 0; 
-    let dealerSum: number = 0; 
-    let gameOver: boolean = false; 
-    let message: string = ''; 
-    balanceStore.set(data.balance); // Initialize the store with the passed balance
-    let bet_amount: number = 5; // Default bet amount
-    let bet_amounts: number[] = [5, 10, 20, 50, 100, 200, 500, 1000, 2500, 5000, balance]; // Possible bet amounts
+    let deck = $state<Card[]>([]); 
+    let playerHand = $state<Card[]>([]);
+    let dealerHand = $state<Card[]>([]);
+    let playerSum = $state(0); 
+    let dealerSum = $state(0); 
+    let gameOver = $state(false); 
+    let message = $state(''); 
+    
+    let bet_amount = $state(5); // Default bet amount
+    let bet_amounts = $state([5, 10, 20, 50, 100, 200, 500, 1000, 2500, 5000]); // Possible bet amounts
 
-    let reshuffleAfterRound = false;
-    let betPlaced: boolean = false; // Track if a bet has been placed
-
-    $: bet_amounts[bet_amounts.length - 1] = balance; // Ensure the last value in bet_amounts is always the current balance
+    let reshuffleAfterRound = $state(false);
+    let betPlaced = $state(false); // Track if a bet has been placed
 
     function drawCard(): Card {
         // After reaching last third of the deck -> shuffle the deck
@@ -95,7 +87,6 @@
             }
             else if (playerSum === 21) {
                 adjustBalance(+bet_amount * 2); // Update balance when winning
-                balanceStore.set(balance); // Update the store
                 message = 'Blackjack! You win!'; // Player wins with a sum of 21
                 gameOver = true; 
             }
@@ -119,7 +110,6 @@
             message = 'You busted! Dealer wins!';
         } else if (dealerSum > 21) {
             adjustBalance(+bet_amount * 2); // Update balance when winning
-            balanceStore.set(balance); // Update the store
             message = 'Dealer busted! You win!';
         } else if (playerSum === 21 && playerHand.length === 2) {
             // case is already satisfied in hit()
@@ -127,16 +117,13 @@
             message = 'Dealer has Blackjack! Dealer wins!';
         } else if (playerSum > dealerSum) {
             adjustBalance(+bet_amount * 2); // Update balance when winning
-            balanceStore.set(balance); // Update the store
             message = 'You win!';
         } else if (playerSum < dealerSum) {
             message = 'Dealer wins!';
         } else if (playerSum === dealerSum) {
             adjustBalance(+bet_amount); // Update balance for a tie
-            balanceStore.set(balance); // Update the store
             message = 'It\'s a tie!';
         }
-
     }
     
     // reset clears everything and starts a new game
@@ -149,13 +136,12 @@
     }
 
     function bet() {
-        if (balance < bet_amount) {
+        if (localBalance < bet_amount) {
             message = 'Insufficient balance!'; // Prevent betting if balance is too low
             return;
         }
 
         adjustBalance(-bet_amount); // Update balance when placing a bet
-        balanceStore.set(balance); // Update the store
         betPlaced = true; // Mark the bet as placed
         revealCards(); // Reveal the cards and calculate sums
     }
@@ -174,40 +160,17 @@
         }
     }
 
-    // update balance in the database
+    // update balance in the database and store
     async function adjustBalance(amount: number) {
-        balance += amount;
-        balanceStore.set(balance); // Update the store
-        await updateBalanceOnServer(); // speichert's in der DB
+        const newBalance = localBalance + amount;
+        // Update the global store which will update both UI and server
+        await updateBalance(data.username, newBalance);
     }
 
-    async function updateBalanceOnServer() {
-        const res = await fetch('/api/update-balance', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                username: data.username,
-                balance: balance
-            })
-        });
-
-        const result = await res.json();
-        if (!result.success) {
-            console.error('Balance update failed:', result.error);
-        }
+    // Reset balance to the initial value
+    function resetBalance() {
+        updateBalance(data.username, 5000);
     }
-
-// --------------------------- admin / test function -----------------------------
-// Reset balance to the initial value
-function resetBalance() {
-    async function resetBalance() {
-        balance = 5000;
-        balanceStore.set(balance); // Update the store
-        await updateBalanceOnServer(); // speichert's in der DB
-    }
-    resetBalance();
-}
-// ---------------------------
 
     onMount(startGame); // Start the game when the component mounts
 </script>
@@ -217,7 +180,7 @@ function resetBalance() {
 
 <!-- show the username -->
 <p>Logged in as: {data.username}</p>
-<p>Balance: {balance} €</p>
+<p>Balance: {localBalance} €</p>
 
 
 <style>
@@ -298,7 +261,7 @@ function resetBalance() {
     </div>
 
     <div class="buttons">
-        <button on:click={hit} disabled={gameOver || !betPlaced}>Karte</button>
+        <button onclick={hit} disabled={gameOver || !betPlaced}>Karte</button>
         
         <div class="player-hand">
             <strong>Spieler:</strong><br />
@@ -317,39 +280,32 @@ function resetBalance() {
             {/if}
         </div>
     
-        <button on:click={stand} disabled={gameOver || !betPlaced}>Stand</button>
+        <button onclick={stand} disabled={gameOver || !betPlaced}>Stand</button>
     </div>
     
 
     <p>{message}</p>
     <div class="buttons">
         <label for="bet">Setze: </label>
-        <button on:click={decreaseBet} disabled={bet_amount === bet_amounts[0] || betPlaced}>-</button>
+        <button onclick={decreaseBet} disabled={bet_amount === bet_amounts[0] || betPlaced}>-</button>
         <span id="bet">${bet_amount}</span>
-        <button on:click={increaseBet} disabled={bet_amount === bet_amounts[bet_amounts.length - 1] || betPlaced}>+</button>
-        <button on:click={bet} disabled={gameOver || betPlaced}>Setzen</button>
+        <button onclick={increaseBet} disabled={bet_amount === bet_amounts[bet_amounts.length - 1] || betPlaced}>+</button>
+        <button onclick={bet} disabled={gameOver || betPlaced}>Setzen</button>
     </div>
     
     <div class="balance">
-        Aktueller Kontostand: ${balance} €
+        Aktueller Kontostand: {localBalance} €
     </div>
 
     {#if gameOver}
-        <button on:click={startGame}>Neue Runde</button>
+        <button onclick={startGame}>Neue Runde</button>
     {/if}
     {#if reshuffleAfterRound}
         <p>Deck wird nach der Runde neu gemischt...</p>
     {/if}
 
     <div class="buttons">
-        <button on:click={resetBalance} disabled={gameOver}>Reset Balance</button>
+        <button onclick={resetBalance}>Reset Balance</button>
     </div>  
 
 </div>
-
-
-<!-- TODO: 
- - add a global store for variables to ensure having the same state in all components
-    - add a global store for the balance to ensure having the same state in all components
-    - 
-  -->

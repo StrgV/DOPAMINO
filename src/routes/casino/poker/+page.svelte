@@ -4,17 +4,20 @@
     import { balanceStore } from '$lib/stores/balanceStore';
     import { onMount } from 'svelte';
 
-    export let data: { username: string };
-
-    let balance = 0;
-    let pot = 0;
-    let playerHand: Card[] = [];
-    let dealerHand: Card[] = [];
-    let sharedCards: Card[] = [];
-    let message = '';
+    // export let data: { username: string };
+    let { data } = $props();
+    
+    // Use both local state and subscribe to the store
+    let localBalance = $state(data.balance);
+    
+    let pot = $state(0);
+    let playerHand: Card[] = $state([]);
+    let dealerHand: Card[] = $state([]);
+    let sharedCards: Card[] = $state([]);
+    let message = $state('');
     let chips = [10, 50, 100, 500, 1000, 5000];
-    let gameStarted = false;
-    let bettingActive = false;
+    let gameStarted = $state(false);
+    let bettingActive = $state(false);
     let currentBet = 0;
     let playerBet = 0;
     let roundBet = 0;
@@ -22,17 +25,17 @@
     const smallBlind = 50;
     const bigBlind = smallBlind * 2;
 
-    $: balanceStore.subscribe(value => balance = value);
+    
 
     async function adjustBalance(amount: number) {
-        balance += amount;
-        balanceStore.set(balance);
+        localBalance+= amount;
+        balanceStore.set(localBalance);
         await fetch('/api/update-balance', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 username: data.username,
-                balance: balance
+                balance: localBalance
             })
         });
     }
@@ -63,7 +66,7 @@
             message = 'Betting is not active!';
             return;
         }
-        if (balance >= chip) {
+        if (localBalance>= chip) {
             adjustBalance(-chip);
             playerBet += chip;
             roundBet += chip;
@@ -88,7 +91,7 @@
     function call() {
         if (!bettingActive) return;
         const callAmount = currentBet - playerBet;
-        if (balance >= callAmount) {
+        if (localBalance>= callAmount) {
             adjustBalance(-callAmount);
             pot += callAmount;
             playerBet = currentBet;
@@ -158,23 +161,23 @@
         bettingActive = true;
     }
 
-    onMount(async () => {
-        const res = await fetch('/api/get-balance', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username: data.username })
-        });
-        const result = await res.json();
-        if (result.success) {
-            balanceStore.set(result.balance);
-        }
-    });
+    // onMount(async () => {
+    //     const res = await fetch('/api/get-balance', {
+    //         method: 'POST',
+    //         headers: { 'Content-Type': 'application/json' },
+    //         body: JSON.stringify({ username: data.username })
+    //     });
+    //     const result = await res.json();
+    //     if (result.success) {
+    //         balanceStore.set(result.balance);
+    //     }
+    // });
 </script>
 
 <h1>Poker</h1>
 <p>Welcome to the Poker page!</p>
 <p>Logged in as: {data.username}</p>
-<p>Balance: {balance} €</p>
+<p>Balance: {localBalance} €</p>
 
 <div class="game-container">
     <div class="dealer-hand">
@@ -229,15 +232,15 @@
             <div>
                 <h2>Place your bet:</h2>
                 {#each chips as chip}
-                    <button on:click={() => placeBet(chip)} disabled={!bettingActive}>{chip} €</button>
+                    <button onclick={() => placeBet(chip)} disabled={!bettingActive}>{chip} €</button>
                 {/each}
-                <button on:click={check} disabled={!bettingActive}>Check</button>
-                <button on:click={call} disabled={!bettingActive}>Call</button>
-                <button on:click={raise} disabled={!bettingActive}>Raise</button>
-                <button on:click={foldGame} disabled={!bettingActive}>Fold</button>
+                <button onclick={check} disabled={!bettingActive}>Check</button>
+                <button onclick={call} disabled={!bettingActive}>Call</button>
+                <button onclick={raise} disabled={!bettingActive}>Raise</button>
+                <button onclick={foldGame} disabled={!bettingActive}>Fold</button>
             </div>
         {:else}
-            <button on:click={startGame}>Start Game</button>
+            <button onclick={startGame}>Start Game</button>
         {/if}
     </div>
 </div>
