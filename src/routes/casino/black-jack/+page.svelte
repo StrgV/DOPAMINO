@@ -288,6 +288,7 @@
     <div class="buttons">
         <label for="bet">Setze: </label>
         <button onclick={decreaseBet} disabled={bet_amount === bet_amounts[0] || betPlaced}>-</button>
+        <button onclick={decreaseBet} disabled={bet_amount === bet_amounts[0] || betPlaced}>-</button>
         <span id="bet">${bet_amount}</span>
         <button onclick={increaseBet} disabled={bet_amount === bet_amounts[bet_amounts.length - 1] || betPlaced}>+</button>
         <button onclick={bet} disabled={gameOver || betPlaced}>Setzen</button>
@@ -305,7 +306,7 @@
     {/if}
 
     <div class="buttons">
-        <button onclick={resetBalance}>Reset Balance</button>
+        <button onclick={resetBalance} disabled={gameOver}>Reset Balance</button>
     </div>  
 
 </div>
