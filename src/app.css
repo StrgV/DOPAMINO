@@ -60,6 +60,13 @@ h2 {
   font-size: clamp(1rem, 3vw, 2rem);
 }
 
+h3 {
+  font-family: 'DM Serif Text', serif;
+  font-weight: normal;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
 button {
   position: relative;
   margin: 0.25rem;

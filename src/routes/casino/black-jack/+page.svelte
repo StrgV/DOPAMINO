@@ -215,26 +215,30 @@
 <h1 class="title">BLACK JACK</h1>
 
 <div class="stat-container">
-
+    <h3>Spiel</h3>
+    <p>Kontostand: {localBalance} €</p>
+    <div>Spieler Summe: {playerSum}</div>
+    <div>Dealer: {dealerSum}</div>
+    <p>Ergebnis: {message}</p>
     <!-- <button onclick={resetBalance} disabled={gameOver}>Reset Balance</button> -->
 
-    <!-- <div class="balance">
-        Aktueller Kontostand: {localBalance} €
-    </div> -->
+    {#if gameOver} 
+        <button onclick={startGame}>Neue Runde</button>
+    {/if}
 
-    <!-- {#if reshuffleAfterRound}
+    {#if reshuffleAfterRound}
         <p>Deck wird nach der Runde neu gemischt...</p>
-    {/if} -->
+    {/if}
 
 </div>
 
 <div class="game-container">
     <p>
         Karten im Deck: {deck.length}
-      </p>
-      <div class="dealer-hand">
-        <strong>Dealer:</strong><br />
-        <div class="card-row">
+    </p>
+      <div class="hand-dealer">
+        <strong>Dealer:</strong>
+        <div>
             {#if betPlaced}
                 {#if gameOver}
                     {#each dealerHand as c}
@@ -251,28 +255,13 @@
                 <span class="card">🂠</span>
             {/if}
         </div>
-        {#if gameOver}
-            <div><strong>Summe:</strong> {dealerSum}</div>
-        {/if}
     </div>
 
-    <div class="player-hand">
-        <strong>Spieler:</strong><br />
-        {#if betPlaced}
-            <div><strong>Summe:</strong> {playerSum}</div>
-        {/if}
-        <div class="card-row">
+    <div class="hand-player">
+        <strong>Spieler:</strong>
             <Hand hand={playerHand} />
-        </div>
     </div>
     
-
-    {#if gameOver} 
-        <button onclick={startGame}>Neue Runde</button>
-    {/if}
-
-    <p>{message}</p>
-
     <div class="controls">
         <div class="game-controls">
             <button onclick={hit} disabled={gameOver || !betPlaced}>Hit</button>
@@ -285,8 +274,6 @@
             <button onclick={increaseBet} disabled={bet_amount === bet_amounts[bet_amounts.length - 1] || betPlaced} style="margin-right: 1rem;">+</button>
         </div>
     </div>
-    
-
 </div>
 
 <style>
@@ -294,6 +281,20 @@
         position: absolute;
         top: 0px;
     }
+    .stat-container{
+        position: absolute;
+        right: 10px;
+        bottom: 5%;
+        margin: 1rem;
+        padding: 1rem;
+        display: block;
+        justify-content: center;
+        height: 30%;
+        width: 20%;
+        border: 2px solid var(--secondary-color);
+        border-radius: 10px;
+    }
+
     .game-container {
         display: flex;
         flex-direction: column;
@@ -302,6 +303,8 @@
         margin-top: 2rem;
     }
     .controls {
+        display: flex;
+        flex-direction: row;
         position: absolute;
         bottom: 5%;
         display: flex;
@@ -312,12 +315,6 @@
         padding: 0.5rem;
     }
 
-    #bet {
-        display: inline-block;
-        width: 6ch; /* Platz für 4 Ziffern, z.B. "5000" */
-        text-align: center;
-        font-variant-numeric: tabular-nums; /* gleiche Ziffernbreite, falls unterstützt */
-    }
     .bet-controls{
         display: flex;
         align-items: center;
@@ -333,15 +330,22 @@
         border-radius: 10px;
         background-color: var(--secondary-color);
     }
-    .player-hand {
+    .hand-player {
         text-align: center;
         margin: 2rem;
-        width: 40%;
+        height: 15rem;
     }
 
-    .dealer-hand {
+    .hand-dealer{
         text-align: center;
-        margin-bottom: 1rem;
+        margin: 2rem;
+        height: 20%;
     }
 
+    #bet {
+        display: inline-block;
+        width: 6ch; /* Platz für 4 Ziffern, z.B. "5000" */
+        text-align: center;
+        font-variant-numeric: tabular-nums; /* gleiche Ziffernbreite, falls unterstützt */
+    }
 </style>
