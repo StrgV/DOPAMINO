@@ -2,7 +2,6 @@
     import { balanceStore } from "$lib/stores/balanceStore";
     import { onMount } from "svelte";
     import { get } from "svelte/store";
-    //export let data: { username: string; };
     let { data } = $props()
 
     // Use $state to track the balance from the store

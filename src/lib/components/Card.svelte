@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { fly } from "svelte/transition";
 
    let { value, suit, style } = $props(); 
 
@@ -16,7 +17,7 @@
 
 </script>
 
-<div class="card" style="{style}">
+<div class="card" style="{style} in:fly={{ y: 50, duration: 400 }}">
     <img src={imagePath} alt={`Playing card: ${value}${suit}`} />
 </div>
 

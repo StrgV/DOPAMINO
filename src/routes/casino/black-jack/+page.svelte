@@ -3,24 +3,7 @@
     import { get } from 'svelte/store';
     import { createDeck, calculateSum, type Card } from './blackjack';
     import { balanceStore, updateBalance } from '$lib/stores/balanceStore';
-
-    // let { data } = $props();
-    
-    // // Use both local state and subscribe to the store
-    // let localBalance = $state(data.balance);
-    
-    // // Initialize the store with the data from the server
-    // onMount(() => {
-    //     balanceStore.set(data.balance);
-        
-    //     // Subscribe to the store to keep local balance in sync
-    //     const unsubscribe = balanceStore.subscribe(value => {
-    //         localBalance = value;
-    //     });
-        
-    //     return unsubscribe; // Clean up subscription when component unmounts
-    // });
-
+	import Hand from '$lib/components/Hand.svelte';
 
     let { data } = $props();
 
@@ -40,6 +23,28 @@
         }
     });
 
+    // preload all card images
+    const values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'B', 'Q', 'K'];
+    const suits = ['♥️', '♦️', '♣️', '♠️']; // Use the same suit characters as your Card component expects
+
+    // Function to convert suit characters to the format used in filenames
+    function suitToChar(suit: string): string {
+        switch (suit) {
+            case '♥️': return 'H';
+            case '♦️': return 'D';
+            case '♣️': return 'C';
+            case '♠️': return 'S';
+            default: return ''; 
+        }
+    }
+
+    // Generate an array of all 52 card image paths
+    const allCardImagePaths: string[] = [];
+    for (const value of values) {
+        for (const suit of suits) {
+            allCardImagePaths.push(`/Cards/Card_${value}${suitToChar(suit)}.svg`);
+        }
+    }    
 
 
     // necessary variables for the game
@@ -56,6 +61,8 @@
 
     let reshuffleAfterRound = $state(false);
     let betPlaced = $state(false); // Track if a bet has been placed
+
+    
 
     function drawCard(): Card {
         // After reaching last third of the deck -> shuffle the deck
@@ -196,6 +203,13 @@
     onMount(startGame); // Start the game when the component mounts
 </script>
 
+<svelte:head>
+    {#each allCardImagePaths as imagePath}
+        <link rel="preload" href={imagePath} as="image">
+    {/each}
+</svelte:head>
+
+
 <h1>BLACK JACK</h1>
 <p>Welcome to the Black Jack page!</p>
 
@@ -281,20 +295,14 @@
         {/if}
     </div>
 
-    <div class="buttons">
+
+        <div class="buttons">
         <button onclick={hit} disabled={gameOver || !betPlaced}>Karte</button>
         
         <div class="player-hand">
             <strong>Spieler:</strong><br />
             <div class="card-row">
-                {#if betPlaced}
-                    {#each playerHand as c}
-                        <span class="card">{c.value}{c.suit}</span>
-                    {/each}
-                {:else}
-                    <span class="card">🂠</span>
-                    <span class="card">🂠</span>
-                {/if}
+                <Hand hand={playerHand} />
             </div>
             {#if betPlaced}
                 <div><strong>Summe:</strong> {playerSum}</div>
