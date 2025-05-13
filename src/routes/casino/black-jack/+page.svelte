@@ -213,9 +213,20 @@
 
 
 <h1 class="title">BLACK JACK</h1>
-<!-- <p>Welcome to the Black Jack page!</p>
-<p>Logged in as: {data.username}</p>
-<p>Balance: {localBalance} €</p> -->
+
+<div class="stat-container">
+
+    <!-- <button onclick={resetBalance} disabled={gameOver}>Reset Balance</button> -->
+
+    <!-- <div class="balance">
+        Aktueller Kontostand: {localBalance} €
+    </div> -->
+
+    <!-- {#if reshuffleAfterRound}
+        <p>Deck wird nach der Runde neu gemischt...</p>
+    {/if} -->
+
+</div>
 
 <div class="game-container">
     <p>
@@ -244,15 +255,15 @@
             <div><strong>Summe:</strong> {dealerSum}</div>
         {/if}
     </div>
-        
+
     <div class="player-hand">
         <strong>Spieler:</strong><br />
-        <div class="card-row">
-            <Hand hand={playerHand} />
-        </div>
         {#if betPlaced}
             <div><strong>Summe:</strong> {playerSum}</div>
         {/if}
+        <div class="card-row">
+            <Hand hand={playerHand} />
+        </div>
     </div>
     
 
@@ -264,27 +275,18 @@
 
     <div class="controls">
         <div class="game-controls">
-            <button onclick={hit} disabled={gameOver || !betPlaced}>Karte</button>
+            <button onclick={hit} disabled={gameOver || !betPlaced}>Hit</button>
             <button onclick={stand} disabled={gameOver || !betPlaced}>Stand</button>
         </div>
         <div class="bet-controls">
             <button onclick={bet} disabled={gameOver || betPlaced}>Setzen</button>
             <button onclick={decreaseBet} disabled={bet_amount === bet_amounts[0] || betPlaced} style="margin-left: 1rem;">-</button>
-            <span id="bet" style="margin: 0.5rem;">${bet_amount}</span>
+            <div id="bet">${bet_amount}</div>
             <button onclick={increaseBet} disabled={bet_amount === bet_amounts[bet_amounts.length - 1] || betPlaced} style="margin-right: 1rem;">+</button>
         </div>
     </div>
     
 
-    <!-- <button onclick={resetBalance} disabled={gameOver}>Reset Balance</button> -->
-
-    <!-- <div class="balance">
-        Aktueller Kontostand: {localBalance} €
-    </div> -->
-
-    <!-- {#if reshuffleAfterRound}
-        <p>Deck wird nach der Runde neu gemischt...</p>
-    {/if} -->
 </div>
 
 <style>
@@ -310,7 +312,15 @@
         padding: 0.5rem;
     }
 
+    #bet {
+        display: inline-block;
+        width: 6ch; /* Platz für 4 Ziffern, z.B. "5000" */
+        text-align: center;
+        font-variant-numeric: tabular-nums; /* gleiche Ziffernbreite, falls unterstützt */
+    }
     .bet-controls{
+        display: flex;
+        align-items: center;
         margin: 0.5rem;
         padding: 0.5rem;
         border-radius: 10px;
@@ -328,11 +338,6 @@
         margin: 2rem;
         width: 40%;
     }
-    /* .balance {
-        bottom: 10px;
-        left: 10px;
-        font-weight: bold;
-    } */
 
     .dealer-hand {
         text-align: center;
