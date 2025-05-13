@@ -242,48 +242,46 @@
             <div><strong>Summe:</strong> {dealerSum}</div>
         {/if}
     </div>
-        <div class="buttons">
-            <button onclick={hit} disabled={gameOver || !betPlaced}>Karte</button>
         
-        <div class="player-hand">
-            <strong>Spieler:</strong><br />
-            <div class="card-row">
-                <Hand hand={playerHand} />
-            </div>
-            {#if betPlaced}
-                <div><strong>Summe:</strong> {playerSum}</div>
-            {/if}
+    <div class="player-hand">
+        <strong>Spieler:</strong><br />
+        <div class="card-row">
+            <Hand hand={playerHand} />
         </div>
-    
-        <button onclick={stand} disabled={gameOver || !betPlaced}>Stand</button>
+        {#if betPlaced}
+            <div><strong>Summe:</strong> {playerSum}</div>
+        {/if}
     </div>
     
 
-    <p>{message}</p>
-    <div class="buttons">
-        <label for="bet">Setze: </label>
-        <button onclick={decreaseBet} disabled={bet_amount === bet_amounts[0] || betPlaced}>-</button>
-        <button onclick={decreaseBet} disabled={bet_amount === bet_amounts[0] || betPlaced}>-</button>
-        <span id="bet">${bet_amount}</span>
-        <button onclick={increaseBet} disabled={bet_amount === bet_amounts[bet_amounts.length - 1] || betPlaced}>+</button>
-        <button onclick={bet} disabled={gameOver || betPlaced}>Setzen</button>
-    </div>
-    
-    <div class="balance">
-        Aktueller Kontostand: {localBalance} €
-    </div>
-
-    {#if gameOver}
+    {#if gameOver} 
         <button onclick={startGame}>Neue Runde</button>
     {/if}
-    {#if reshuffleAfterRound}
+
+    <p>{message}</p>
+    <div class="controls">
+        <div class="game-controls">
+            <button onclick={hit} disabled={gameOver || !betPlaced}>Karte</button>
+            <button onclick={stand} disabled={gameOver || !betPlaced}>Stand</button>
+        </div>
+        <div class="bet-controls">
+            <button onclick={bet} disabled={gameOver || betPlaced}>Setzen</button>
+            <button onclick={decreaseBet} disabled={bet_amount === bet_amounts[0] || betPlaced} style="margin-left: 1rem;">-</button>
+            <span id="bet" style="margin: 0.5rem;">${bet_amount}</span>
+            <button onclick={increaseBet} disabled={bet_amount === bet_amounts[bet_amounts.length - 1] || betPlaced} style="margin-right: 1rem;">+</button>
+        </div>
+    </div>
+    
+
+    <!-- <button onclick={resetBalance} disabled={gameOver}>Reset Balance</button> -->
+
+    <!-- <div class="balance">
+        Aktueller Kontostand: {localBalance} €
+    </div> -->
+
+    <!-- {#if reshuffleAfterRound}
         <p>Deck wird nach der Runde neu gemischt...</p>
-    {/if}
-
-    <div class="buttons">
-        <button onclick={resetBalance} disabled={gameOver}>Reset Balance</button>
-    </div>  
-
+    {/if} -->
 </div>
 
 <style>
@@ -298,39 +296,40 @@
         font-family: sans-serif;
         margin-top: 2rem;
     }
-    .buttons {
+    .controls {
+        position: absolute;
+        bottom: 5%;
         display: flex;
+        flex-direction: row;
         justify-content: space-between;
         align-items: center;
         gap: 1.5rem;
-        margin: 1rem 0;
+        padding: 0.5rem;
+    }
+
+    .bet-controls{
+        margin: 0.5rem;
+        padding: 0.5rem;
+        border-radius: 10px;
+        background-color: var(--secondary-color);
+    }
+
+    .game-controls{
+        margin: 0.5rem;
+        padding: 0.5rem;
+        border-radius: 10px;
+        background-color: var(--secondary-color);
     }
     .player-hand {
         text-align: center;
-        width: 20%;
+        margin: 2rem;
+        width: 40%;
     }
-    .balance {
+    /* .balance {
         bottom: 10px;
         left: 10px;
         font-weight: bold;
-    }
-
-    .card-row {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        margin-bottom: 0.5rem;
-    }
-
-    .card {
-        padding: 0.25rem 0.5rem;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        background: white;
-        color: black;
-        font-weight: bold;
-    }
+    } */
 
     .dealer-hand {
         text-align: center;
