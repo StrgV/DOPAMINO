@@ -1,9 +1,9 @@
 <script lang="ts">
-    import CardComponent from '$lib/components/Card.svelte';
+    import Card from '$lib/components/Card.svelte';
 
     let { hand } = $props();
     
-    const overlap = 50;
+    const overlap = 30;
 
 </script>
 
@@ -14,7 +14,7 @@
         {@const marginLeft = i > 0 ? -overlap : 0}
         {@const dynamicStyle = `margin-left: ${marginLeft}px`}
 
-        <CardComponent 
+        <Card 
             value={card.value} 
             suit={card.suit} 
             style={dynamicStyle}/>
