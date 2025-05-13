@@ -3,6 +3,7 @@
 
    let { value, suit, style } = $props(); 
 
+    // Translate the suits to characters for the image paths
     function suitToChar(suit: string): string {
         switch (suit) {
             case '♥️': return 'H';
@@ -17,6 +18,7 @@
 
 </script>
 
+<!-- Display the card with animations -->
 <div class="card" style="{style}" in:fly={{ y: 30, duration: 200 }}>
     <img src={imagePath} alt={`Playing card: ${value}${suit}`} />
 </div>
