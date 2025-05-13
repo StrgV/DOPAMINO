@@ -3,7 +3,9 @@
     import CardComponent from '$lib/components/Card.svelte';
        
     let hand: Card[] = createDeck(1);
-    let sampleHand: Card[] = [hand[1], hand[32], hand[22]];
+    let sampleHand: Card[] = [hand[1], hand[32], hand[22], hand[4], hand[3], hand[2], hand[21]];
+    
+    const overlap = 50;
 
 export function suitToChar(suit: string): string {
     switch (suit) {
@@ -28,8 +30,14 @@ export function suitToChar(suit: string): string {
 
 <div class="hand">
     
-    {#each sampleHand as card}
-        <CardComponent value={card.value} suit={card.suit} />
+    {#each sampleHand as card, i}
+        {@const marginLeft = i > 0 ? -overlap : 0}
+        {@const dynamicStyle = `margin-left: ${marginLeft}px`}
+
+        <CardComponent 
+            value={card.value} 
+            suit={card.suit} 
+            style={dynamicStyle}/>
     {/each}
     
 </div>
