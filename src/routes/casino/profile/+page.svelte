@@ -1,27 +1,28 @@
 <script lang="ts">
-    import { balanceStore } from '$lib/stores/balanceStore';
-    import { onMount } from 'svelte';
+    import { balanceStore } from "$lib/stores/balanceStore";
+    import { onMount } from "svelte";
+    import { get } from "svelte/store";
+    //export let data: { username: string; };
+    let { data } = $props()
 
-    export let data: {
-        username: string;
-    };
+    // Use $state to track the balance from the store
+    let localBalance = $state(0);
 
-    let balance = 0;
 
-    onMount(async () => {
-        const res = await fetch('/api/get-balance', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username: data.username })
-        });
-        const result = await res.json();
-        if (result.success) {
-            balanceStore.set(result.balance); // Update the store with the latest balance
+    // Subscribe to the balance store
+    $effect(() => {
+        localBalance = $balanceStore;
+    });
+
+    // Only set the store value from data if the store is empty
+    onMount(() => {
+        const currentValue = get(balanceStore);
+        if (currentValue === 0) {
+            balanceStore.set(data.balance);
         }
     });
 
-    $: balanceStore.subscribe(value => balance = value); // Reactively update balance
 </script>
 
 <p>Logged in as: {data.username}</p>
-<p>Balance: {balance} €</p>
+<p>Balance: {localBalance} €</p>
