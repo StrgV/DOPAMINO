@@ -25,13 +25,21 @@
 
 <style>
     .card{
+        position: relative;
+        display: flex;
+        height: 100%;
+        width: auto;
         filter: drop-shadow(0px 10px 10px black);
         transition: top 0.3s ease, transform 0.3s ease;
     }
     .card img {
         position: relative; 
+        display: block;
+        max-width: 100%;
+        max-height: 100%;
         width: auto;
         height: auto;
+        object-fit: contain;
     }
 
     .card:hover {

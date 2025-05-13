@@ -7,5 +7,6 @@
     
 </script>
 
-
-<Hand hand={sampleHand} />
+<div style="height: 200px;">
+    <Hand hand={sampleHand} />
+</div>

@@ -210,65 +210,13 @@
 </svelte:head>
 
 
-<h1>BLACK JACK</h1>
-<p>Welcome to the Black Jack page!</p>
-
-<!-- show the username -->
+<h1 class="title">BLACK JACK</h1>
+<!-- <p>Welcome to the Black Jack page!</p>
 <p>Logged in as: {data.username}</p>
-<p>Balance: {localBalance} €</p>
-
-
-<style>
-    .game-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        font-family: sans-serif;
-        margin-top: 2rem;
-    }
-    .buttons {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 1.5rem;
-        margin: 1rem 0;
-    }
-    .player-hand {
-        text-align: center;
-        min-width: 80px;
-    }
-    .balance {
-        bottom: 10px;
-        left: 10px;
-        font-weight: bold;
-    }
-
-    .card-row {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        margin-bottom: 0.5rem;
-    }
-
-    .card {
-        padding: 0.25rem 0.5rem;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        background: white;
-        color: black;
-        font-weight: bold;
-    }
-
-    .dealer-hand {
-        text-align: center;
-        margin-bottom: 1rem;
-    }
-
-</style>
+<p>Balance: {localBalance} €</p> -->
 
 <div class="game-container">
-    <p style="position: absolute; top: 10px; right: 10px;">
+    <p>
         Karten im Deck: {deck.length}
       </p>
       <div class="dealer-hand">
@@ -294,10 +242,8 @@
             <div><strong>Summe:</strong> {dealerSum}</div>
         {/if}
     </div>
-
-
         <div class="buttons">
-        <button onclick={hit} disabled={gameOver || !betPlaced}>Karte</button>
+            <button onclick={hit} disabled={gameOver || !betPlaced}>Karte</button>
         
         <div class="player-hand">
             <strong>Spieler:</strong><br />
@@ -339,3 +285,56 @@
     </div>  
 
 </div>
+
+<style>
+    .title{
+        position: absolute;
+        top: 0px;
+    }
+    .game-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-family: sans-serif;
+        margin-top: 2rem;
+    }
+    .buttons {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1.5rem;
+        margin: 1rem 0;
+    }
+    .player-hand {
+        text-align: center;
+        width: 20%;
+    }
+    .balance {
+        bottom: 10px;
+        left: 10px;
+        font-weight: bold;
+    }
+
+    .card-row {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .card {
+        padding: 0.25rem 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        background: white;
+        color: black;
+        font-weight: bold;
+    }
+
+    .dealer-hand {
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+
+</style>

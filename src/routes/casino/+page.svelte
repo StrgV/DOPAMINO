@@ -27,11 +27,3 @@
 
 <img src="{logo}" alt="Logo of DOPAMINO" class="logo"/>
 <h1>Welcome to the Casino</h1>
-<p>Logged in as: {data.username}</p>
-<p>Balance: {balance} €</p>
-<p>Enjoy your stay!</p>
-
-<br><br>
-<form method="POST" action="?/logout">
-    <button type="submit">Logout</button>
-</form>
