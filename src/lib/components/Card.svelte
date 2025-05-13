@@ -17,7 +17,7 @@
 
 </script>
 
-<div class="card" style="{style} in:fly={{ y: 50, duration: 400 }}">
+<div class="card" style="{style}" in:fly={{ y: 30, duration: 200 }}>
     <img src={imagePath} alt={`Playing card: ${value}${suit}`} />
 </div>
 
