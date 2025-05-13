@@ -1,22 +1,27 @@
 <script lang="ts">
     import logo from "$lib/assets/DOPAMINO_Text_Logo.svg";
     import { balanceStore } from '$lib/stores/balanceStore';
+    import { onMount } from 'svelte';
+    import { get } from 'svelte/store';
+    
     
     let { data } = $props();
     
     // Use $state to track the balance from the store
-    let balance = $state(data.balance);
-    // let currentBalance = $state(0);
+    let balance = $state(0);
     
     // Subscribe to the balance store
     $effect(() => {
-        const unsubscribe = balanceStore.subscribe(value => {
-            balance = value;
-        });
-        
-        return unsubscribe;
+        balance = $balanceStore;
     });
-    
+
+    // Only set the store value from data if sotre is empty
+    onMount(() => {
+        const currentValue = get(balanceStore);
+        if (currentValue === 0) {
+            balanceStore.set(data.balance);
+        }
+    });
 
 </script>
 

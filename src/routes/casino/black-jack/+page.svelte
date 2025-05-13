@@ -1,24 +1,45 @@
 <script lang="ts">
     import { onMount } from 'svelte';
+    import { get } from 'svelte/store';
     import { createDeck, calculateSum, type Card } from './blackjack';
     import { balanceStore, updateBalance } from '$lib/stores/balanceStore';
 
+    // let { data } = $props();
+    
+    // // Use both local state and subscribe to the store
+    // let localBalance = $state(data.balance);
+    
+    // // Initialize the store with the data from the server
+    // onMount(() => {
+    //     balanceStore.set(data.balance);
+        
+    //     // Subscribe to the store to keep local balance in sync
+    //     const unsubscribe = balanceStore.subscribe(value => {
+    //         localBalance = value;
+    //     });
+        
+    //     return unsubscribe; // Clean up subscription when component unmounts
+    // });
+
+
     let { data } = $props();
-    
-    // Use both local state and subscribe to the store
-    let localBalance = $state(data.balance);
-    
-    // Initialize the store with the data from the server
-    onMount(() => {
-        balanceStore.set(data.balance);
-        
-        // Subscribe to the store to keep local balance in sync
-        const unsubscribe = balanceStore.subscribe(value => {
-            localBalance = value;
-        });
-        
-        return unsubscribe; // Clean up subscription when component unmounts
+
+    // Initialize with data.balance instead of 0
+    let localBalance = $state(0);
+
+    // Subscribe to the balance store like your other components
+    $effect(() => {
+        localBalance = $balanceStore;
     });
+    
+    // Set the initial store value from data
+    onMount(() => {
+        const currentValue = get(balanceStore);
+        if (currentValue === 0) {
+            balanceStore.set(data.balance);
+        }
+    });
+
 
 
     // necessary variables for the game
