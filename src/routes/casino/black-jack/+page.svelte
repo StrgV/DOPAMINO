@@ -34,17 +34,19 @@
             case '♦️': return 'D';
             case '♣️': return 'C';
             case '♠️': return 'S';
-            default: return ''; 
+            default: return 'backside'; 
         }
     }
 
     // Generate an array of all 52 card image paths
     const allCardImagePaths: string[] = [];
+    allCardImagePaths.push(`/Cards/Card_backside.svg`);
     for (const value of values) {
         for (const suit of suits) {
             allCardImagePaths.push(`/Cards/Card_${value}${suitToChar(suit)}.svg`);
         }
     }    
+    
 
 
     // necessary variables for the game
@@ -259,6 +261,7 @@
     {/if}
 
     <p>{message}</p>
+
     <div class="controls">
         <div class="game-controls">
             <button onclick={hit} disabled={gameOver || !betPlaced}>Karte</button>
