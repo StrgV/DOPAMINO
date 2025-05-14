@@ -1,7 +1,7 @@
 <script lang="ts">
     import { fly } from "svelte/transition";
 
-   let { value, suit, style } = $props(); 
+   let { value, suit, style, show=true } = $props(); 
 
     // Translate the suits to characters for the image paths
     function suitToChar(suit: string): string {
@@ -14,7 +14,13 @@
         }
     }
 
-    const imagePath = `/Cards/Card_${value}${suitToChar(suit)}.svg`;
+    let imagePath: string = $state("");
+    if(show){
+        imagePath =`/Cards/Card_${value}${suitToChar(suit)}.svg`;
+    }
+    else{
+        imagePath =`/Cards/Card_backside.svg`;
+    }
 
 </script>
 

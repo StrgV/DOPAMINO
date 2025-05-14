@@ -38,7 +38,7 @@
         }
     }
 
-    // Generate an array of all 52 card image paths
+    // Generate an array of all 53 card image paths
     const allCardImagePaths: string[] = [];
     allCardImagePaths.push(`/Cards/Card_backside.svg`);
     for (const value of values) {
@@ -156,15 +156,6 @@
         }
     }
     
-    // reset clears everything and starts a new game
-    function resetGame() {
-        playerHand = [];
-        dealerHand = [];
-        gameOver = false; 
-        message = ''; 
-        startGame();
-    }
-
     function bet() {
         if (localBalance < bet_amount) {
             message = 'Insufficient balance!'; // Prevent betting if balance is too low
@@ -219,6 +210,7 @@
     <p>Kontostand: {localBalance} €</p>
     <div>Spieler Summe: {playerSum}</div>
     <div>Dealer: {dealerSum}</div>
+    <p>Karten im Deck: {deck.length}</p>
     <p>Ergebnis: {message}</p>
     <!-- <button onclick={resetBalance} disabled={gameOver}>Reset Balance</button> -->
 
@@ -233,33 +225,31 @@
 </div>
 
 <div class="game-container">
-    <p>
-        Karten im Deck: {deck.length}
-    </p>
-      <div class="hand-dealer">
+      <div style="text-align: center;">
         <strong>Dealer:</strong>
-        <div>
+        <div class="hand-dealer">
             {#if betPlaced}
                 {#if gameOver}
+                    <Hand hand={dealerHand} />
                     {#each dealerHand as c}
-                        <span class="card">{c.value}{c.suit}</span>
+                        <!-- <CardComponent value={c.value} suit={c.suit} -->
                     {/each}
                 {:else}
                     {#if dealerHand[0]}
-                        <span class="card">{dealerHand[0].value}{dealerHand[0].suit}</span>
-                        <span class="card">🂠</span> <!-- verdeckte Karte -->
+                        <span>{dealerHand[0].value}{dealerHand[0].suit}</span>
+                        <span>🂠</span> <!-- verdeckte Karte -->
                     {/if}
                 {/if}
             {:else}
-                <span class="card">🂠</span>
-                <span class="card">🂠</span>
+                <span>🂠</span>
+                <span>🂠</span>
             {/if}
         </div>
     </div>
 
     <div class="hand-player">
         <strong>Spieler:</strong>
-            <Hand hand={playerHand} />
+        <Hand hand={playerHand} />
     </div>
     
     <div class="controls">
@@ -278,7 +268,7 @@
 
 <style>
     .title{
-        position: absolute;
+        position: sticky;
         top: 0px;
     }
     .stat-container{
@@ -339,7 +329,7 @@
     .hand-dealer{
         text-align: center;
         margin: 2rem;
-        height: 20%;
+        height: 10rem;
     }
 
     #bet {
