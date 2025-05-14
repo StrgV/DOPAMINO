@@ -14,7 +14,7 @@
         {@const dynamicStyle = `margin-left: ${marginLeft}px`}
 
         <!-- Display card -->
-        <Card value={card.value} suit={card.suit} style={dynamicStyle}/>
+        <Card value={card.value} suit={card.suit} show={card.show} style={dynamicStyle}/>
 
     {/each}
     

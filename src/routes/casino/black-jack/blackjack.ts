@@ -1,18 +1,20 @@
 export type Card = {
     suit: '♥️' | '♦️' | '♣️' | '♠️';
     value: '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | 'B' | 'Q' | 'K' | 'A';
+    show: false | true;
 };
 
 export function createDeck(deckCount = 2): Card[] {
     const suits: Card['suit'][] = ['♥️', '♦️', '♣️', '♠️'];
     const values: Card['value'][] = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'B', 'Q', 'K', 'A'];
     let deck: Card[] = [];
+    let show: boolean = true;
 
     // Erstelle 2 vollständige Decks
     for (let d = 0; d < deckCount; d++) {
         for (const suit of suits) {
             for (const value of values) {
-                deck.push({ suit, value });
+                deck.push({ suit, value, show });
             }
         }
     }

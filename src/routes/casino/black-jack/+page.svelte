@@ -50,13 +50,13 @@
 
 
     // necessary variables for the game
-    let deck = $state<Card[]>([]); 
-    let playerHand = $state<Card[]>([]);
-    let dealerHand = $state<Card[]>([]);
-    let playerSum = $state(0); 
-    let dealerSum = $state(0); 
-    let gameOver = $state(false); 
-    let message = $state(''); 
+    let deck: Card[] = $state<Card[]>([]);
+    let playerHand: Card[] = $state<Card[]>([]);
+    let dealerHand: Card[] = $state<Card[]>([]);
+    let playerSum: number = $state(0); 
+    let dealerSum: number = $state(0); 
+    let gameOver: boolean = $state(false); 
+    let message: string = $state(''); 
     
     let bet_amount = $state(5); // Default bet amount
     let bet_amounts = $state([5, 10, 20, 50, 100, 200, 500, 1000, 2500, 5000]); // Possible bet amounts
@@ -64,7 +64,6 @@
     let reshuffleAfterRound = $state(false);
     let betPlaced = $state(false); // Track if a bet has been placed
 
-    
 
     function drawCard(): Card {
         // After reaching last third of the deck -> shuffle the deck
@@ -109,7 +108,7 @@
         if (!gameOver) {
             const newCard = drawCard();
             playerHand = [...playerHand, newCard]; // force a new reference (push wasn't reactive)
-            console.log('Current Hand:', playerHand.map(c => c.value + c.suit));
+            // console.log('Current Hand:', playerHand.map(c => c.value + c.suit));
             calculateSums(); // Recalculate the sums after hitting
             if (playerSum > 21) {
                 message = 'You busted! Dealer wins!'; // Player loses if sum exceeds 21
@@ -189,9 +188,9 @@
     }
 
     // Reset balance to the initial value
-    function resetBalance() {
-        updateBalance(data.username, 5000);
-    }
+    // function resetBalance() {
+    //     updateBalance(data.username, 5000);
+    // }
 
     onMount(startGame); // Start the game when the component mounts
 </script>
@@ -231,18 +230,13 @@
             {#if betPlaced}
                 {#if gameOver}
                     <Hand hand={dealerHand} />
-                    {#each dealerHand as c}
-                        <!-- <CardComponent value={c.value} suit={c.suit} -->
-                    {/each}
                 {:else}
                     {#if dealerHand[0]}
-                        <span>{dealerHand[0].value}{dealerHand[0].suit}</span>
-                        <span>🂠</span> <!-- verdeckte Karte -->
+                        <Hand hand={[dealerHand[0], {...dealerHand[1], show: false}]} />
                     {/if}
                 {/if}
             {:else}
-                <span>🂠</span>
-                <span>🂠</span>
+                        <Hand hand={[{...dealerHand[0], show: false}, {...dealerHand[1], show: false}]} />
             {/if}
         </div>
     </div>
