@@ -23,10 +23,12 @@
 
 </script>
 
-<p>Logged in as: {data.username}</p>
-<p>Balance: {localBalance} €</p>
-<p>Enjoy your stay!</p>
+<div class="content">
+    <p>Logged in as: {data.username}</p>
+    <p>Balance: {localBalance} €</p>
+    <p>Enjoy your stay!</p>
 
-<form method="POST" action="?/logout">
-    <button type="submit">Logout</button>
-</form>
+    <form method="POST" action="?/logout">
+        <button type="submit">Logout</button>
+    </form>
+</div>

@@ -46,8 +46,6 @@
             allCardImagePaths.push(`/Cards/Card_${value}${suitToChar(suit)}.svg`);
         }
     }    
-    
-
 
     // necessary variables for the game
     let deck: Card[] = $state<Card[]>([]);

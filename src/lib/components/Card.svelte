@@ -35,6 +35,7 @@
         display: flex;
         height: 100%;
         width: auto;
+        margin-top: 4em;
         filter: drop-shadow(0px 10px 10px black);
         transition: top 0.3s ease, transform 0.3s ease;
     }
