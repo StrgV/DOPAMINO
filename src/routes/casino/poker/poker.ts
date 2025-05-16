@@ -159,7 +159,7 @@ function getBestOfKind(cards: Card[], count: number): Card[] {
         if (card.value === 'A') return 14;
         if (card.value === 'K') return 13;
         if (card.value === 'Q') return 12;
-        if (card.value === 'J') return 11;
+        if (card.value === 'B') return 11;
         return parseInt(card.value, 10) || 0;
     };
     
@@ -272,7 +272,7 @@ export function showdown(
             if (card.value === 'A') return 14;
             if (card.value === 'K') return 13;
             if (card.value === 'Q') return 12;
-            if (card.value === 'J') return 11;
+            if (card.value === 'B') return 11;
             return parseInt(card.value, 10) || 0;
         };
 

@@ -1,7 +1,8 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import { get } from 'svelte/store';
-    import { createDeck, calculateSum, type Card } from './blackjack';
+    import { createDeck, calculateSum } from './blackjack';
+    import { type Card } from '$lib/types/card'
     import { balanceStore, updateBalance } from '$lib/stores/balanceStore';
 	import Hand from '$lib/components/Hand.svelte';
 

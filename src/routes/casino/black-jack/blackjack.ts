@@ -1,8 +1,4 @@
-export type Card = {
-    suit: '♥️' | '♦️' | '♣️' | '♠️';
-    value: '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | 'B' | 'Q' | 'K' | 'A';
-    show: false | true;
-};
+import { type Card } from '$lib/types/card'
 
 export function createDeck(deckCount = 2): Card[] {
     const suits: Card['suit'][] = ['♥️', '♦️', '♣️', '♠️'];

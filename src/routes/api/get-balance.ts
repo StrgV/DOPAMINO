@@ -3,6 +3,7 @@ import { db } from '$lib/server/db'; // Import the Drizzle database instance
 import { user } from '$lib/server/db/schema'; // Import the user schema
 import { eq } from 'drizzle-orm'; // Import the equality operator for queries
 
+
 export const POST: RequestHandler = async ({ request }) => {
     try {
         const { username } = await request.json();
