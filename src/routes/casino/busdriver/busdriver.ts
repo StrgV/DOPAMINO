@@ -9,7 +9,7 @@ export enum Round {
     END = 5
 }
 
-export type Guess = 'black' | 'red' | 'higher' | 'lower' | 'inside' | 'outside' | '♥️' | '♦️' | '♠️' | '♣️';
+export type Guess = 'purple' | 'yellow' | 'higher' | 'lower' | 'inside' | 'outside' | '♥️' | '♦️' | '♠️' | '♣️';
 
 // creates and shuffles a dekc od cards
 export function initDeck():Card[] {
@@ -21,9 +21,9 @@ export function drawCard(deck: Card[]): Card | undefined {
     return deck.pop();
 }
 
-// cheakc color guess
-export function checkColorGuess(card: Card, guess: 'red' | 'black'): boolean {
-    return ((card.suit === '♥️' || card.suit === '♦️') && guess === 'red' || (card.suit === '♠️' || card.suit === '♣️') && guess === 'black');
+// check color guess
+export function checkColorGuess(card: Card, guess: 'yellow' | 'purple'): boolean {
+    return ((card.suit === '♥️' || card.suit === '♦️') && guess === 'yellow' || (card.suit === '♠️' || card.suit === '♣️') && guess === 'purple');
 } 
 
 // get numeric value from picture cards

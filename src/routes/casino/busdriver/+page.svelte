@@ -33,7 +33,9 @@
 
     let betAmount = $state(5); // Default bet amount
     let bet_amounts = $state([5, 10, 20, 50, 100, 200, 500, 1000, 2500, 5000]); // Possible bet amounts like in blackjack
+    
 
+    
     let showDeck = $state(true);
     // option to cash out 
     let canCashOut = $state(false);
@@ -137,7 +139,7 @@
             
         switch (currentRound) {
             case Round.COLOR:
-                correct = checkColorGuess(newCard, guess as 'red' | 'black');
+                correct = checkColorGuess(newCard, guess as 'yellow' | 'purple');
                 break;
                     
             case Round.HIGH_LOW:
@@ -181,7 +183,7 @@
     function updateRoundMessage() {
         switch (currentRound) {
             case Round.COLOR:
-                message = 'Round 1: Guess if the next card is red or black.';
+                message = 'Round 1: Guess if the next card is yellow or purple.';
                 break;
             case Round.HIGH_LOW:
                 message = 'Round 2: Guess if the next card is higher or lower than the previous one.';
@@ -265,8 +267,8 @@
         {:else if !gameOver}
             <div class="guess-controls">
                 {#if currentRound === Round.COLOR}
-                    <button onclick={() => makeGuess('red')}>Red</button>
-                    <button onclick={() => makeGuess('black')}>Black</button>
+                    <button onclick={() => makeGuess('yellow')}>Yellow</button>
+                    <button onclick={() => makeGuess('purple')}>Purple</button>
                 {:else if currentRound === Round.HIGH_LOW}
                     <button onclick={() => makeGuess('higher')}>Higher</button>
                     <button onclick={() => makeGuess('lower')}>Lower</button>
@@ -290,6 +292,20 @@
             <button onclick={startGame}>Play Again</button>
         {/if}
     </div>
+</div>
+
+<div class="stat-container">
+    <h3>Spiel</h3>
+    <p>Kontostand: {localBalance} €</p>
+    <p>Potentieller Gewinn: {betPlaced ? betAmount * (currentRound === Round.COLOR ? 1 : currentRound === Round.HIGH_LOW ? 2 : currentRound === Round.INSIDE_OUTSIDE ? 3 : currentRound === Round.SUIT ? 4 : 20) : 0} €</p>
+    <p>Einsatz: {betAmount} €</p>
+    <p>Karten im Deck: {deck.length}</p>
+    <p>Runde: {currentRound}</p>
+    <p>Multiplikator bei Gewinn: {betPlaced ? (currentRound === Round.COLOR ? 2 : currentRound === Round.HIGH_LOW ? 3 : currentRound === Round.INSIDE_OUTSIDE ? 4 : currentRound === Round.SUIT ? 20 : 20) : 1}</p>
+    
+    {#if gameOver && !betPlaced}
+        <button onclick={startGame}>Neue Runde</button>
+    {/if}
 </div>
 
 <style>
@@ -384,99 +400,24 @@
         margin-left: 1rem;
     }
     
+    .stat-container{
+        position: absolute;
+        right: 10px;
+        bottom: 5%;
+        margin: 1rem;
+        padding: 1rem;
+        display: block;
+        justify-content: center;
+        height: 30%;
+        width: 20%;
+        border: 2px solid var(--secondary-color);
+        border-radius: 10px;
+    }
+
+    /* Left-align <p> within the stats container */
+    .stat-container p, 
+    .stat-container h3 {
+        text-align: left;
+    }
 
 </style>
-
-<!-- 
-<style>
-     .cards-container {
-        display: flex;
-     }
-    #bet {
-        display: inline-block;
-        width: 6ch;
-        text-align: center;
-        font-variant-numeric: tabular-nums;
-    }
-    
-    .bet-controls {
-        display: flex;
-        align-items: center;
-        margin: 0.5rem;
-        padding: 0.5rem;
-        border-radius: 10px;
-        background-color: var(--secondary-color);
-    }
-    
-    .game-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-top: 2rem;
-    }
-    
-    .message {
-        font-size: 1.2rem;
-        margin-bottom: 1.5rem;
-        text-align: center;
-    }
-    
-    .cards-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 2rem;
-        margin-bottom: 2rem;
-    }
-    
-    .drawn-cards {
-        min-height: 150px;
-        display: flex;
-        justify-content: center;
-    }
-    
-    .deck-container {
-        text-align: center;
-    }
-    
-    .card-back {
-        width: 60px;
-        height: 90px;
-        background-color: var(--accent-color, #ffbe1a);
-        border: 1px solid var(--secondary-color, #7a5de5);
-        border-radius: 5px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 1.5rem;
-        margin: 0.5rem auto;
-    }
-    
-    .controls {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-    }
-    
-    .bet-controls, .guess-controls {
-        display: flex;
-        gap: 0.5rem;
-        background-color: var(--secondary-color, #7a5de5);
-        padding: 0.5rem;
-        border-radius: 5px;
-    }
-    
-    button {
-        padding: 0.5rem 1rem;
-        background-color: var(--accent-color, #ffbe1a);
-        color: var(--text-color-dark, #160433);
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-    
-    button:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-    }
-</style> -->
