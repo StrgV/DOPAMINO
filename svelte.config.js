@@ -12,7 +12,19 @@ const config = {
 	},
 
 	kit: {
-		adapter: adapter()
+		adapter: adapter(),
+		csp:{
+			directives: {
+				'script-src': [
+					'self', 
+					"https://maps.googleapis.com",
+				],
+				'img-src': [
+					'self', 
+				'https://maps.googleapis.com',
+				'https://maps.gstatic.com/']
+            },
+		}
 	},
 
 	extensions: ['.svelte', '.svx']
