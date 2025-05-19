@@ -92,6 +92,7 @@
         playerHand = [drawCard(), drawCard()];
         dealerHand = [drawCard()];
         calculateSums();
+
     }
 
     function calculateSums() {
@@ -140,7 +141,8 @@
             adjustBalance(+bet_amount * 2); // Update balance when winning
             message = 'Dealer busted! You win!';
         } else if (playerSum === 21 && playerHand.length === 2) {
-            // case is already satisfied in hit()
+            adjustBalance(+bet_amount *2),
+            message = 'Black Jack! You win!';
         } else if (dealerSum === 21 && dealerHand.length === 2) {
             message = 'Dealer has Blackjack! Dealer wins!';
         } else if (playerSum > dealerSum) {
