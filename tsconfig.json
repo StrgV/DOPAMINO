@@ -1,10 +1,7 @@
 {
 	"extends": "./.svelte-kit/tsconfig.json",
 	"compilerOptions": {
-		"types": [
-			"svelte",
-			"@types/google.maps"
-		],
+		"types": ["svelte"],
 		"allowJs": true,
 		"checkJs": true,
 		"esModuleInterop": true,

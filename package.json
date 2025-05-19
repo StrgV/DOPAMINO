@@ -65,7 +65,6 @@
 		"vitest": "^3.0.0"
 	},
 	"dependencies": {
-		"@googlemaps/js-api-loader": "^1.16.8",
 		"@libsql/client": "^0.14.0",
 		"@oslojs/crypto": "^1.0.1",
 		"@oslojs/encoding": "^1.1.0",
