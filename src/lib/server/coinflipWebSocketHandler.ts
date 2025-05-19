@@ -30,7 +30,7 @@ export function initCointflipSockets(httpServer: HttpServer){
     io.on("connection", (socket: Socket) => {
         console.log(`[Coinflip] Spieler verbunden: ${socket.id}`)
 
-        socket.on("create Lobby", () => {
+        socket.on("createLobby", () => {
             let lobbyId: string;
             do{
                 lobbyId = Math.random().toString(36).substring(2, 8).toUpperCase();
