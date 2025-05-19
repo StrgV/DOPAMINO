@@ -45,6 +45,7 @@
           <li><a href="/casino/">Home</a></li>
           <li><a href="/casino/black-jack/">Black Jack</a></li>
           <li><a href="/casino/busdriver/">Busdriver</a></li>
+          <li><a href="/casino/coinflip/">Coinflip</a></li>
           <li><a href="/../">Registrierung</a></li>
           <li><a href="https://www.bundesweit-gegen-gluecksspielsucht.de/">Geld Aufladen</a></li>
         </ul>

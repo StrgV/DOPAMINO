@@ -78,11 +78,17 @@ button {
   font-size: medium;
   transition: top 0.3s ease, transform 0.3s ease;
 }
-
+ 
 button:hover {
   cursor: pointer;
   transform: translate(0, -3px);
   filter: drop-shadow(0px 8px 5px rgba(0,0,0,0.3)) brightness(1.05); 
+}
+
+button.hamburger:hover{ /* Hiermit wird das Hamburger Menü nicht wie alle anderen Buttons leicht angehoben */
+  cursor: pointer;
+  transform: none;
+  filter: none; 
 }
 
 input {
