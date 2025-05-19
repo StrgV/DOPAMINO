@@ -28,7 +28,7 @@
     <p>Balance: {localBalance} €</p>
     <p>Enjoy your stay!</p>
 
-    <form method="POST" action="?/logout">
+    <form method="POST" action="/casino?/logout">
         <button type="submit">Logout</button>
     </form>
 </div>

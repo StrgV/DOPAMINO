@@ -1,6 +1,6 @@
 <script lang="ts">
     import { startPokerGame, dealCards, showdown, evaluateHand } from './poker';
-    import { type Card } from '../black-jack/blackjack';
+    import { type Card } from '$lib/types/card';
     import { balanceStore } from '$lib/stores/balanceStore';
     import { onMount } from 'svelte';
 
