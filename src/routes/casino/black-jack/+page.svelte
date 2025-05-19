@@ -210,7 +210,6 @@
     <div>Dealer: {dealerSum}</div>
     <p>Karten im Deck: {deck.length}</p>
     <p>Ergebnis: {message}</p>
-    <!-- <button onclick={resetBalance} disabled={gameOver}>Reset Balance</button> -->
 
     {#if gameOver} 
         <button onclick={startGame}>Neue Runde</button>
@@ -244,18 +243,18 @@
         <strong>Spieler:</strong>
         <Hand hand={playerHand} />
     </div>
-    
-    <div class="controls">
-        <div class="game-controls">
-            <button onclick={hit} disabled={gameOver || !betPlaced}>Hit</button>
-            <button onclick={stand} disabled={gameOver || !betPlaced}>Stand</button>
-        </div>
-        <div class="bet-controls">
-            <button onclick={bet} disabled={gameOver || betPlaced}>Setzen</button>
-            <button onclick={decreaseBet} disabled={bet_amount === bet_amounts[0] || betPlaced} style="margin-left: 1rem;">-</button>
-            <div id="bet">${bet_amount}</div>
-            <button onclick={increaseBet} disabled={bet_amount === bet_amounts[bet_amounts.length - 1] || betPlaced} style="margin-right: 1rem;">+</button>
-        </div>
+</div>
+
+<div class="controls">
+    <div class="game-controls">
+        <button onclick={hit} disabled={gameOver || !betPlaced}>Hit</button>
+        <button onclick={stand} disabled={gameOver || !betPlaced}>Stand</button>
+    </div>
+    <div class="bet-controls">
+        <button onclick={bet} disabled={gameOver || betPlaced}>Setzen</button>
+        <button onclick={decreaseBet} disabled={bet_amount === bet_amounts[0] || betPlaced} style="margin-left: 1rem;">-</button>
+        <div id="bet">${bet_amount}</div>
+        <button onclick={increaseBet} disabled={bet_amount === bet_amounts[bet_amounts.length - 1] || betPlaced} style="margin-right: 1rem;">+</button>
     </div>
 </div>
 
@@ -272,8 +271,8 @@
         padding: 1rem;
         display: block;
         justify-content: center;
-        height: 30%;
-        width: 20%;
+        min-height: 30%;
+        min-width: 15%;
         border: 2px solid var(--secondary-color);
         border-radius: 10px;
     }
@@ -285,6 +284,7 @@
         font-family: sans-serif;
         margin-top: 2rem;
     }
+
     .controls {
         display: flex;
         flex-direction: row;
@@ -313,16 +313,16 @@
         border-radius: 10px;
         background-color: var(--secondary-color);
     }
-    .hand-player {
-        text-align: center;
-        margin: 2rem;
-        height: 15rem;
-    }
 
     .hand-dealer{
         text-align: center;
+        height: 18vh;
+    }
+
+    .hand-player {
+        text-align: center;
         margin: 2rem;
-        height: 10rem;
+        height: 25vh;
     }
 
     #bet {
