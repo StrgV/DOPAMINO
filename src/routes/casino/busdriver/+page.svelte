@@ -1,6 +1,10 @@
 <script lang="ts">
     import type { PageData } from './$types';
     import { onMount } from 'svelte';
+    import Diamonds from '$lib/assets/Diamonds.svg';
+    import Clubs from '$lib/assets/clubs.svg';
+    import Hearts from '$lib/assets/Hearts.svg';
+    import Spades from '$lib/assets/Spades.svg'; 
     import { balanceStore, updateBalance } from '$lib/stores/balanceStore';
     import { get } from 'svelte/store'
     import Hand from '$lib/components/Hand.svelte';
@@ -202,7 +206,6 @@
                 break;
         }
     }
-
     // cashout functio
     function cashOut() {
         if (canCashOut && !gameOver) {
@@ -244,16 +247,10 @@
     <p class="message">{message}</p>
     
     <div class="cards-container">
-        {#if showDeck}
-            <div class="deck-container">
-                <Hand hand={[{suit: '♠️', value: 'A', show: false}]} />
-            </div>
-        {/if}
-        <div class="drawn-cards">
-            {#if drawnCards.length > 0}
+
+        {#if drawnCards.length > 0}
                 <Hand hand={drawnCards} />
-            {/if}
-        </div>
+        {/if}
     </div>
     
     <div class="controls">
@@ -276,10 +273,10 @@
                     <button onclick={() => makeGuess('inside')}>Inside</button>
                     <button onclick={() => makeGuess('outside')}>Outside</button>
                 {:else if currentRound === Round.SUIT}
-                    <button onclick={() => makeGuess('♥️')}>♥️</button>
-                    <button onclick={() => makeGuess('♦️')}>♦️</button>
-                    <button onclick={() => makeGuess('♣️')}>♣️</button>
-                    <button onclick={() => makeGuess('♠️')}>♠️</button>
+                    <button onclick={() => makeGuess('♥️')} class="suit-buttons"><img src="{Hearts}" alt="Hearts" style="height: 20px"></button>
+                    <button onclick={() => makeGuess('♦️')} class="suit-buttons"><img src="{Diamonds}" alt="Diamonds" style="height: 20px"></button>
+                    <button onclick={() => makeGuess('♣️')} class="suit-buttons"><img src="{Clubs}" alt="Clubs" style="height: 20px"></button>
+                    <button onclick={() => makeGuess('♠️')} class="suit-buttons"><img src="{Spades}" alt="Spades" style="height: 20px"></button>
                 {/if}
 
                 {#if canCashOut}
@@ -291,6 +288,7 @@
         {#if gameOver}
             <button onclick={startGame}>Play Again</button>
         {/if}
+
     </div>
 </div>
 
@@ -330,27 +328,12 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        /* max-width: 1000px; */
         margin: 0 auto;
-    }
-    
-    .drawn-cards {
-        text-align: center;
-        margin-bottom: 1.7rem;
-        margin-top: 1rem;
-        height: 12rem;
-    }
-
-    .deck-container {
-        text-align: center;
-        margin: 0.5rem;
-        margin-top: 0;
-        height: 12rem;
     }
     
     .cards-container {
         margin-top: 0;
-
+        height: 40vh;
     }
 
     .controls {
@@ -374,21 +357,11 @@
         font-weight: bold;
         color: white;
     }
-    
-    button {
-        padding: 0.5rem 1rem;
-        background-color: var(--accent-color, #ffbe1a);
-        color: var(--text-color-dark, #160433);
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-weight: bold;
+
+    .suit-buttons {
+        background: var(--text-color-light);
     }
-    
-    button:hover {
-        filter: brightness(1.1);
-    }
-    
+
     button:disabled {
         opacity: 0.5;
         cursor: not-allowed;
