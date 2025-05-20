@@ -174,8 +174,7 @@
 
 </script>
 
-<main>
-  <h1>Münzwurf Online</h1>
+<div class="content">
   <p>Verbindungsstatus: <span class="status-{connectionStatus.toLowerCase().replace(' ', '-')}">{connectionStatus}</span></p>
 
   {#if gamePhase === 'initial'}
@@ -217,33 +216,17 @@
     </div>
   {/if}
 
-  <div class="message-console">
-    <h4>Log:</h4>
+  <div class="stat-container">
+    <h2>Log</h2>
     {#each messages as msg (msg.id)}
       <p class="message-{msg.type}">{msg.text}</p>
     {/each}
   </div>
-</main>
+</div>
 
 <style>
-  main {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    text-align: center;
-    background-color: #f9f9f9;
-  }
-
-  h1 {
-    color: #333;
-  }
-
   .status-verbunden { color: green; font-weight: bold; }
-  .status-verbinde_ { color: orange; } /* Beachte: Svelte mag keine Punkte in Klassennamen, die dynamisch generiert werden. Ggf. anpassen. */
+  .status-verbinde_ { color: orange; }   
   .status-verbindung-getrennt { color: red; font-weight: bold; }
 
   .actions, .join-lobby, .lobby-info, .results {
@@ -262,29 +245,8 @@
     margin-top: 10px;
   }
 
-  input[type="text"] {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1em;
-    text-transform: uppercase;
-  }
-
-  button {
-    padding: 10px 18px;
-    font-size: 1em;
-    color: white;
-    background-color: #007bff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-  button:hover {
-    background-color: #0056b3;
-  }
   .join-lobby button {
-    background-color: #28a745;
+    background-color: var(--primary-color);
   }
   .join-lobby button:hover {
     background-color: #1e7e34;
@@ -316,28 +278,6 @@
   .winner-message.win { color: #28a745; }
   .winner-message.lose { color: #dc3545; }
 
-  .message-console {
-    margin-top: 30px;
-    padding-top: 15px;
-    border-top: 1px dashed #ccc;
-    text-align: left;
-    font-size: 0.9em;
-    max-height: 150px;
-    overflow-y: auto;
-    background-color: #f0f0f0;
-    padding: 10px;
-    border-radius: 4px;
-  }
-  .message-console h4 {
-    margin-top: 0;
-    margin-bottom: 5px;
-    color: #333;
-  }
-  .message-console p {
-    margin: 3px 0;
-    padding: 3px;
-    border-radius: 3px;
-  }
   .message-info { color: #00529B; background-color: #BDE5F8; }
   .message-success { color: #4F8A10; background-color: #DFF2BF; }
   .message-warning { color: #9F6000; background-color: #FEEFB3; }

@@ -208,8 +208,8 @@
 <div class="stat-container">
     <h3>Spiel</h3>
     <p>Kontostand: {localBalance} €</p>
-    <div>Spieler Summe: {playerSum}</div>
-    <div>Dealer: {dealerSum}</div>
+    <p>Spieler Summe: {playerSum}</p>
+    <p>Dealer: {dealerSum}</p>
     <p>Karten im Deck: {deck.length}</p>
     <p>Ergebnis: {message}</p>
 
@@ -264,19 +264,6 @@
     .title{
         position: sticky;
         top: 0px;
-    }
-    .stat-container{
-        position: absolute;
-        right: 10px;
-        bottom: 5%;
-        margin: 1rem;
-        padding: 1rem;
-        display: block;
-        justify-content: center;
-        min-height: 30%;
-        min-width: 15%;
-        border: 2px solid var(--secondary-color);
-        border-radius: 10px;
     }
 
     .game-container {
