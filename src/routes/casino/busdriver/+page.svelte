@@ -371,7 +371,7 @@
     }
     
     .cash-out {
-        background-color: #22c55e;
+        background-color: var(--green-color);
         color: white;
         margin-left: 1rem;
     }

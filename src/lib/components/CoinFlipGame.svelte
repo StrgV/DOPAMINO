@@ -48,7 +48,7 @@
   // const SERVER_URL = 'http://localhost:3000'; // Backend Server URL
 
   let socket: Socket; // Typ für die Socket-Instanz
-  let connectionStatus: string = $state('Verbinde...');
+  let connectionStatus: string = $state('verbinde');
   let currentLobbyId: string = $state('');
   let inputLobbyId: string = $state(''); // Für das Beitreten
   let isHost: boolean = $state(false);
@@ -117,14 +117,14 @@
 
       let localWinner: string = '';
       if (isHost && data.winner === 'host') {
-        localWinner = 'Du';
+        localWinner = 'Host';
       } else if (!isHost && data.winner === 'guest') {
-        localWinner = 'Du';
+        localWinner = 'Host';
       } else {
-        localWinner = 'Dein Gegner';
+        localWinner = 'Gast';
       }
       const winningChoice = localWinner === 'Du' ? playerChoice : opponentChoice;
-      winnerMessage = `${localWinner} hat gewonnen! (${data.result} war ${winningChoice})`;
+      winnerMessage = `${localWinner} hat gewonnen! (${data.result} war die richtige Wahl)`;
       addMessage(winnerMessage, 'success');
     });
 
@@ -175,11 +175,10 @@
 </script>
 
 <div class="content">
-  <p>Verbindungsstatus: <span class="status-{connectionStatus.toLowerCase().replace(' ', '-')}">{connectionStatus}</span></p>
 
   {#if gamePhase === 'initial'}
     <div class="actions">
-      <button onclick={createLobby}>Neue Lobby erstellen (Du wählst Heads)</button>
+      <button onclick={createLobby}>Neue Lobby erstellen (Heads)</button>
       <div class="join-lobby">
         <input type="text" bind:value={inputLobbyId} placeholder="Lobby ID" maxlength="6" />
         <button onclick={joinLobby}>Lobby beitreten</button>
@@ -200,41 +199,58 @@
     </div>
   {/if}
 
-  {#if gamePhase === 'waitingForPlayer'}
-    <p class="waiting-message">Warte auf einen Mitspieler...</p>
-  {/if}
-
   {#if gamePhase === 'playing'}
     <p class="playing-message">Spiel läuft... Münze wird geworfen!</p>
   {/if}
 
   {#if gamePhase === 'finished'}
     <div class="results">
-      <h3>Ergebnis des Wurfs: <span class="flip-result">{flipResult}</span></h3>
+      <h3>Ergebnis des Wurfs: <span>{flipResult}</span></h3>
       <h2 class="winner-message {winnerMessage.includes('Du') ? 'win' : 'lose'}">{winnerMessage}</h2>
       <button onclick={resetGame}>Neues Spiel / Lobby verlassen</button>
     </div>
   {/if}
+</div>
 
   <div class="stat-container">
     <h2>Log</h2>
+    <p>Verbindungsstatus: <span class="status-{connectionStatus.toLowerCase().replace(' ', '-')}">{connectionStatus}</span></p>
     {#each messages as msg (msg.id)}
       <p class="message-{msg.type}">{msg.text}</p>
     {/each}
   </div>
-</div>
 
 <style>
-  .status-verbunden { color: green; font-weight: bold; }
-  .status-verbinde_ { color: orange; }   
-  .status-verbindung-getrennt { color: red; font-weight: bold; }
+  .status-verbunden { color: var(--green-color); font-weight: bold; }
+  .status-verbinde { color: orange; }   
+  .status-verbindung-getrennt { color: var(--primary-color); font-weight: bold; }
 
-  .actions, .join-lobby, .lobby-info, .results {
-    margin-bottom: 20px;
-    padding: 15px;
-    background-color: #fff;
+  .actions{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0.5em
+  }
+
+  .join-lobby, .lobby-info {
+    justify-content: center;
+    align-items: center;
+    background-color: var(--secondary-color);
     border-radius: 6px;
-    border: 1px solid #eee;
+    padding: 0.5rem;
+    margin: 1rem;
+  }
+
+  .results {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--secondary-color);
+    border-radius: 6px;
+    padding: 0.5rem;
+    margin: 1rem; 
   }
 
   .join-lobby {
@@ -249,37 +265,15 @@
     background-color: var(--primary-color);
   }
   .join-lobby button:hover {
-    background-color: #1e7e34;
-  }
-  .results button {
-    background-color: #6c757d;
-  }
-  .results button:hover {
-    background-color: #545b62;
-  }
-
-
-  .waiting-message, .playing-message {
-    font-style: italic;
-    color: #555;
-    margin: 20px 0;
-  }
-
-  .flip-result {
-    font-weight: bold;
-    font-size: 1.5em;
-    color: #dc3545; /* War vorher rot, kann man anpassen */
+    background-color: var(--green-color);
   }
 
   .winner-message {
     font-size: 1.3em;
-    margin-top: 10px;
   }
-  .winner-message.win { color: #28a745; }
-  .winner-message.lose { color: #dc3545; }
 
   .message-info { color: #00529B; background-color: #BDE5F8; }
-  .message-success { color: #4F8A10; background-color: #DFF2BF; }
+  .message-success { color: var(--green-color); background-color: #DFF2BF; }
   .message-warning { color: #9F6000; background-color: #FEEFB3; }
   .message-error { color: #D8000C; background-color: #FFD2D2; }
   .message-emphasis { font-weight: bold; color: #555; }
