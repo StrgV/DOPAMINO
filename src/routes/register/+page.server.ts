@@ -97,6 +97,16 @@ export const actions: Actions = {
       birthday: new Date(birthdayTimestamp) // Default birthday
     });
     
+
+    // delete old cookie & session
+    const oldSessionId = cookies.get('session_id'); // Retrieve the old session ID from the cookie
+    if(oldSessionId) {
+      // Delete the old session from the database
+      await db.delete(session).where(eq(session.id, oldSessionId)).execute();
+      // Delete the old session cookie
+      cookies.delete('session_id', { path: '/' });
+    }
+    
     // AUTO-LOGIN: Create a session for the new user
     const sessionId = crypto.randomUUID();
     const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 1 day expiration
