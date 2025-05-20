@@ -1,5 +1,5 @@
 import { db } from '$lib/server/db';
-import { user } from '$lib/server/db/schema';
+import { user, session } from '$lib/server/db/schema';
 import type { Actions } from './$types';
 import { redirect, fail } from '@sveltejs/kit';
 import bcrypt from 'bcrypt';
@@ -10,7 +10,7 @@ import { eq } from 'drizzle-orm';
 console.log('Register action called'); // Debugging output
 
 export const actions: Actions = {
-  register: async ({ request }) => {
+  register: async ({ request, cookies }) => {
     console.log('Register action called'); // Debugging output
     const form = await request.formData();
     const forename:string = form.get('forename') as string;
@@ -82,9 +82,12 @@ export const actions: Actions = {
     const hashedPassword = await bcrypt.hash(password, 10);
     console.log('starting to insert user'); // Debugging output
 
+    // Create a unique ID for the user
+    const userId = crypto.randomUUID();
+
     // Insert the new user into the database
     await db.insert(user).values({
-      id: crypto.randomUUID(),
+      id: userId,
       forename,
       name,
       username,
@@ -94,7 +97,26 @@ export const actions: Actions = {
       birthday: new Date(birthdayTimestamp) // Default birthday
     });
     
-    // Redirect after successful registration
+    // AUTO-LOGIN: Create a session for the new user
+    const sessionId = crypto.randomUUID();
+    const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 1 day expiration
+    
+    await db.insert(session).values({
+      id: sessionId,
+      userId: userId,
+      expiresAt: expiresAt,
+    }).execute();
+    
+    // Set the session cookie
+    cookies.set('session_id', sessionId, {
+      httpOnly: true, // Cookie is only accessible via HTTP
+      path: '/', // Cookie applies to all pages
+      maxAge: 60 * 60 * 24, // Cookie expires after 1 day
+      secure: true,
+      sameSite: 'strict', // CSRF protection
+    });
+    
+    console.log('Session created for new user:', { sessionId, expiresAt });
     console.log('Redirecting to /casino');
     throw redirect(303, '/casino');
   }
