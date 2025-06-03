@@ -2,7 +2,7 @@
     import Card from '$lib/components/Card.svelte';
 
     let { hand } = $props();
-    const overlap = 30;
+    const overlap = 15;
 </script>
 
 
@@ -11,7 +11,7 @@
     <!-- For each card in hand -->
     {#each hand as card, i}
         {@const marginLeft = i > 0 ? -overlap : 0}
-        {@const dynamicStyle = `margin-left: ${marginLeft}px`}
+        {@const dynamicStyle = `margin-left: ${marginLeft}%`}
 
         <!-- Display card -->
         <Card value={card.value} suit={card.suit} show={card.show} style={dynamicStyle}/>

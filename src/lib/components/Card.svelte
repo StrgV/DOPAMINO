@@ -50,7 +50,6 @@
     }
 
     .card:hover {
-        cursor: pointer;
         transform: translate(0, -20%);
     }
 </style>

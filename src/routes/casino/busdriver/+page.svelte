@@ -22,8 +22,6 @@
     import { type Card } from '$lib/types/card'
     
     let { data } = $props();
-    // let { data }: { data: PageData } = $props();
-
 
     // variables
     let localBalance = $state(0);
@@ -243,54 +241,52 @@
 <h1>BUSDRIVER</h1>
 <p class="message">{message}</p>
 <div class="content">
-    <!-- <div class="game-container"> -->
         <div class="cards-container">
-
             {#if drawnCards.length > 0}
                     <Hand hand={drawnCards} />
             {/if}
         </div>
-        
-        <div class="controls">
-            {#if !betPlaced && !gameOver}
-                <div class="bet-controls">
-                    <button onclick={placeBet} disabled={localBalance < betAmount}>Place Bet</button>
-                    <button onclick={decreaseBet} disabled={betAmount === bet_amounts[0]} style="margin-left: 1rem;">-</button>
-                    <div id="bet">{betAmount} €</div>
-                    <button onclick={increaseBet} disabled={betAmount === bet_amounts[bet_amounts.length - 1]} style="margin-right: 1rem;">+</button>
-                </div>
-            {:else if !gameOver}
-                <div class="guess-controls">
-                    {#if currentRound === Round.COLOR}
-                        <button onclick={() => makeGuess('yellow')}>Yellow</button>
-                        <button onclick={() => makeGuess('purple')}>Purple</button>
-                    {:else if currentRound === Round.HIGH_LOW}
-                        <button onclick={() => makeGuess('higher')}>Higher</button>
-                        <button onclick={() => makeGuess('lower')}>Lower</button>
-                    {:else if currentRound === Round.INSIDE_OUTSIDE}
-                        <button onclick={() => makeGuess('inside')}>Inside</button>
-                        <button onclick={() => makeGuess('outside')}>Outside</button>
-                    {:else if currentRound === Round.SUIT}
-                        <button onclick={() => makeGuess('♥️')} class="suit-buttons"><img src="{Hearts}" alt="Hearts" style="height: 20px"></button>
-                        <button onclick={() => makeGuess('♦️')} class="suit-buttons"><img src="{Diamonds}" alt="Diamonds" style="height: 20px"></button>
-                        <button onclick={() => makeGuess('♣️')} class="suit-buttons"><img src="{Clubs}" alt="Clubs" style="height: 20px"></button>
-                        <button onclick={() => makeGuess('♠️')} class="suit-buttons"><img src="{Spades}" alt="Spades" style="height: 20px"></button>
-                    {/if}
-
-                    {#if canCashOut}
-                        <button onclick={cashOut} class="cash-out">Cash Out</button>
-                    {/if}
-                </div>
-            {/if}
-            
-            {#if gameOver}
-                <button onclick={startGame}>Play Again</button>
-            {/if}
-
-        </div>
-    <!-- </div> -->
 </div>
 
+<div class="controls">
+    {#if !betPlaced && !gameOver}
+        <div class="bet-controls">
+            <button onclick={placeBet} disabled={localBalance < betAmount}>Place Bet</button>
+            <button onclick={decreaseBet} disabled={betAmount === bet_amounts[0]} style="margin-left: 1rem;">-</button>
+            <div id="bet">{betAmount} €</div>
+            <button onclick={increaseBet} disabled={betAmount === bet_amounts[bet_amounts.length - 1]} style="margin-right: 1rem;">+</button>
+        </div>
+    {:else if !gameOver}
+        <div class="guess-controls">
+            {#if currentRound === Round.COLOR}
+                <button onclick={() => makeGuess('yellow')}>Yellow</button>
+                <button onclick={() => makeGuess('purple')}>Purple</button>
+            {:else if currentRound === Round.HIGH_LOW}
+                <button onclick={() => makeGuess('higher')}>Higher</button>
+                <button onclick={() => makeGuess('lower')}>Lower</button>
+            {:else if currentRound === Round.INSIDE_OUTSIDE}
+                <button onclick={() => makeGuess('inside')}>Inside</button>
+                <button onclick={() => makeGuess('outside')}>Outside</button>
+            {:else if currentRound === Round.SUIT}
+            <div>
+                <button onclick={() => makeGuess('♥️')} class="suit-buttons"><img src="{Hearts}" alt="Hearts" style="height: 20px"></button>
+                <button onclick={() => makeGuess('♦️')} class="suit-buttons"><img src="{Diamonds}" alt="Diamonds" style="height: 20px"></button>
+                <button onclick={() => makeGuess('♣️')} class="suit-buttons"><img src="{Clubs}" alt="Clubs" style="height: 20px"></button>
+                <button onclick={() => makeGuess('♠️')} class="suit-buttons"><img src="{Spades}" alt="Spades" style="height: 20px"></button>
+            </div>
+            {/if}
+
+            {#if canCashOut}
+                <button onclick={cashOut} class="cash-out">Cash Out</button>
+            {/if}
+        </div>
+    {/if}
+    
+    {#if gameOver}
+        <button onclick={startGame}>Play Again</button>
+    {/if}
+
+</div>
 <div class="stat-container">
     <h3>Spiel</h3>
     <p>Kontostand: {localBalance} €</p>
@@ -319,12 +315,13 @@
     }
     
     .cards-container {
-        height: 80%;
+        height: 50%;
         width: 40vw;
-        margin-bottom: 10%;
+        margin-bottom: 7rem;
     }
 
     .controls {
+        position: sticky;
         display: flex;
         flex-direction: row;
         position: sticky;
@@ -346,6 +343,8 @@
     }
 
     .guess-controls{
+        display: flex;
+        flex-direction: row;
         margin: 0.5rem;
         padding: 0.5rem;
         border-radius: 10px;
