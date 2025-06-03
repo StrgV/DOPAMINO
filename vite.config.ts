@@ -28,6 +28,10 @@ const webSocketPlugin: PluginOption = {
 // More info at: https://storybook.js.org/docs/writing-tests/test-addon
 export default defineConfig({
 	plugins: [tailwindcss(), sveltekit(), webSocketPlugin],
+	server: {
+		host: '0.0.0.0',
+		port: 5173
+	},
 	test: {
 		workspace: [
 			{
