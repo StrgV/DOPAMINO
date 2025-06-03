@@ -7,8 +7,21 @@
    viewBox="0 0 63.5 88.899986"
    version="1.1"
    id="svg1"
+   sodipodi:docname="Card_9H.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview16"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm" />
   <defs
      id="defs1" />
   <g
@@ -20,41 +33,35 @@
          id="path242"
          style="fill:#f4efe7;stroke:none;stroke-width:3.81;stroke-linecap:round;paint-order:markers fill stroke"
          d="m 1056.6207,13.554164 h 50.8166 c 3.5133,0 6.3417,2.83208 6.3417,6.34994 v 76.20011 c 0,3.51787 -2.8284,6.349936 -6.3417,6.349936 h -50.8166 c -3.5133,0 -6.3417,-2.832066 -6.3417,-6.349936 v -76.20011 c 0,-3.51786 2.8284,-6.34994 6.3417,-6.34994 z" />
-      <text
-         xml:space="preserve"
-         style="font-size:12.973px;line-height:0.9;font-family:'DM Serif Display';-inkscape-font-specification:'DM Serif Display';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.470471;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.1;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
-         x="1056.361"
-         y="26.018913"
-         id="text243"><tspan
-           id="tspan243"
-           style="font-size:12.973px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.470471;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
-           x="1056.361"
-           y="26.018913">9</tspan></text>
+      <g
+         aria-label="9"
+         id="text243"
+         style="font-size:12.973px;line-height:0.9;font-family:'DM Serif Display';-inkscape-font-specification:'DM Serif Display';letter-spacing:0px;word-spacing:0px;stroke:#000000;stroke-width:0.470471;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.1;paint-order:stroke fill markers">
+        <path
+           d="m 1062.8475,21.0762 q 0,1.310273 -0.6098,2.387032 -0.6097,1.063786 -1.7902,1.790274 -1.1676,0.726488 -2.8671,1.024867 l -0.052,-0.233514 q 1.1546,-0.246487 1.8552,-0.713515 0.7005,-0.467028 1.0508,-1.180543 0.3632,-0.713515 0.467,-1.712436 -0.2724,0.181622 -0.6746,0.298379 -0.4021,0.103784 -0.9081,0.103784 -0.7265,0 -1.3103,-0.285406 -0.5708,-0.298379 -0.9081,-0.856218 -0.3373,-0.557839 -0.3373,-1.349192 0,-0.843245 0.4152,-1.452975 0.4151,-0.622704 1.0897,-0.960002 0.6876,-0.337298 1.5049,-0.337298 1.4789,0 2.2702,0.934056 0.8044,0.921082 0.8044,2.542707 z m -4.2552,-0.895137 q 0,1.180543 0.3243,1.712436 0.3244,0.51892 1.0638,0.51892 0.5449,0 0.9471,-0.233514 0.026,-0.285406 0.039,-0.570812 0.013,-0.298379 0.013,-0.622704 0,-1.193516 -0.1167,-1.868112 -0.1168,-0.687568 -0.3762,-0.972974 -0.2595,-0.285406 -0.7006,-0.285406 -0.5967,0 -0.8951,0.544866 -0.2984,0.544866 -0.2984,1.7773 z"
+           id="path18" />
+      </g>
       <path
          id="path243"
          style="fill:none;fill-opacity:0;stroke:#333333;stroke-width:0.240883;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
          d="m 1066.784,28.350424 h 30.49 c 2.108,0 3.805,1.88935 3.805,4.23621 v 50.83505 c 0,2.34686 -1.697,4.23621 -3.805,4.23621 h -30.49 c -2.108,0 -3.805,-1.88935 -3.805,-4.23621 v -50.83505 c 0,-2.34686 1.697,-4.23621 3.805,-4.23621 z" />
-      <text
-         xml:space="preserve"
-         style="font-size:55.5989px;line-height:0.9;font-family:'DM Serif Display';-inkscape-font-specification:'DM Serif Display';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:2.032;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.1;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
-         x="1067.2675"
-         y="75.48999"
-         id="text244"><tspan
-           id="tspan244"
-           style="font-size:55.5989px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:2.032;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
-           x="1067.2675"
-           y="75.48999">9</tspan></text>
-      <text
-         xml:space="preserve"
-         style="font-size:12.973px;line-height:0.9;font-family:'DM Serif Display';-inkscape-font-specification:'DM Serif Display';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.470471;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.1;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
-         x="-1107.6969"
-         y="-89.98938"
+      <g
+         aria-label="9"
+         id="text244"
+         style="font-size:55.5989px;line-height:0.9;font-family:'DM Serif Display';-inkscape-font-specification:'DM Serif Display';letter-spacing:0px;word-spacing:0px;stroke:#000000;stroke-width:2.032;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.1;paint-order:stroke fill markers">
+        <path
+           d="m 1095.0669,54.306809 q 0,5.615489 -2.6131,10.230198 -2.6132,4.55911 -7.6727,7.672648 -5.0039,3.113539 -12.2873,4.392313 l -0.2224,-1.00078 q 4.9483,-1.056379 7.9506,-3.057939 3.0023,-2.001561 4.5035,-5.0595 1.5568,-3.05794 2.0016,-7.339055 -1.1676,0.778384 -2.8912,1.278775 -1.7235,0.444791 -3.8919,0.444791 -3.1135,0 -5.6155,-1.223176 -2.4463,-1.278775 -3.8919,-3.669527 -1.4456,-2.390753 -1.4456,-5.782286 0,-3.613928 1.7792,-6.227077 1.7792,-2.668747 4.6703,-4.114318 2.9467,-1.445572 6.4495,-1.445572 6.3382,0 9.7298,4.003121 3.4471,3.947522 3.4471,10.897384 z m -18.2364,-3.836324 q 0,5.0595 1.3899,7.339055 1.39,2.223956 4.5591,2.223956 2.3352,0 4.0588,-1.00078 0.1112,-1.223176 0.1668,-2.446352 0.056,-1.278774 0.056,-2.668747 0,-5.115099 -0.5004,-8.006241 -0.5004,-2.946742 -1.6124,-4.169918 -1.112,-1.223176 -3.0023,-1.223176 -2.5576,0 -3.8364,2.335154 -1.2787,2.335154 -1.2787,7.617049 z"
+           id="path21" />
+      </g>
+      <g
+         aria-label="9"
+         transform="scale(-1)"
          id="text245"
-         transform="scale(-1)"><tspan
-           id="tspan245"
-           style="font-size:12.973px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.470471;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
-           x="-1107.6969"
-           y="-89.98938">9</tspan></text>
+         style="font-size:12.973px;line-height:0.9;font-family:'DM Serif Display';-inkscape-font-specification:'DM Serif Display';letter-spacing:0px;word-spacing:0px;stroke:#000000;stroke-width:0.470471;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.1;paint-order:stroke fill markers">
+        <path
+           d="m -1101.2104,-94.932093 q 0,1.310273 -0.6097,2.387032 -0.6098,1.063786 -1.7903,1.790274 -1.1676,0.726488 -2.867,1.024867 l -0.052,-0.233514 q 1.1546,-0.246487 1.8551,-0.713515 0.7006,-0.467028 1.0508,-1.180543 0.3633,-0.713515 0.4671,-1.712436 -0.2725,0.181622 -0.6746,0.298379 -0.4022,0.103784 -0.9082,0.103784 -0.7264,0 -1.3102,-0.285406 -0.5708,-0.298379 -0.9081,-0.856218 -0.3373,-0.557839 -0.3373,-1.349192 0,-0.843245 0.4151,-1.452976 0.4151,-0.622704 1.0897,-0.960002 0.6876,-0.337298 1.5049,-0.337298 1.4789,0 2.2703,0.934056 0.8043,0.921083 0.8043,2.542708 z m -4.2551,-0.895137 q 0,1.180543 0.3243,1.712436 0.3243,0.51892 1.0638,0.51892 0.5448,0 0.947,-0.233514 0.026,-0.285406 0.039,-0.570812 0.013,-0.298379 0.013,-0.622704 0,-1.193516 -0.1168,-1.868112 -0.1167,-0.687569 -0.3762,-0.972975 -0.2594,-0.285406 -0.7005,-0.285406 -0.5968,0 -0.8952,0.544866 -0.2983,0.544866 -0.2983,1.777301 z"
+           id="path24" />
+      </g>
       <path
          id="path377"
          style="fill:#ffbe1a;stroke-width:2.71543;stroke-linecap:round;paint-order:markers fill stroke"

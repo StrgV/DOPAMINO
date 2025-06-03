@@ -7,8 +7,21 @@
    viewBox="0 0 63.5 88.899986"
    version="1.1"
    id="svg1"
+   sodipodi:docname="Card_AH.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview15"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm" />
   <defs
      id="defs1" />
   <g
@@ -20,31 +33,27 @@
          id="path567"
          style="fill:#f4efe7;stroke:none;stroke-width:3.81;stroke-linecap:round;paint-order:markers fill stroke"
          d="m 1437.6207,13.554164 h 50.8166 c 3.5133,0 6.3417,2.83208 6.3417,6.34994 v 76.20011 c 0,3.51787 -2.8284,6.349936 -6.3417,6.349936 h -50.8166 c -3.5133,0 -6.3417,-2.832066 -6.3417,-6.349936 v -76.20011 c 0,-3.51786 2.8284,-6.34994 6.3417,-6.34994 z" />
-      <text
-         xml:space="preserve"
-         style="font-size:12.973px;line-height:0.9;font-family:'DM Serif Display';-inkscape-font-specification:'DM Serif Display';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.470471;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.1;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
-         x="1437.3612"
-         y="26.018913"
-         id="text567"><tspan
-           id="tspan567"
-           style="font-size:12.973px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.470471;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
-           x="1437.3612"
-           y="26.018913">A</tspan></text>
+      <g
+         aria-label="A"
+         id="text567"
+         style="font-size:12.973px;line-height:0.9;font-family:'DM Serif Display';-inkscape-font-specification:'DM Serif Display';letter-spacing:0px;word-spacing:0px;stroke:#000000;stroke-width:0.470471;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.1;paint-order:stroke fill markers">
+        <path
+           d="m 1437.465,26.018913 v -0.12973 l 0.3243,-0.116757 q 0.2595,-0.103784 0.4022,-0.246487 0.1427,-0.155676 0.2335,-0.428109 l 2.6724,-7.667042 h 1.1027 l 2.6336,7.718934 q 0.1037,0.285406 0.2335,0.441082 0.1297,0.142703 0.4021,0.246487 l 0.1557,0.05189 v 0.12973 h -3.2951 v -0.12973 l 0.1946,-0.06486 q 0.2724,-0.103784 0.3243,-0.285406 0.065,-0.194595 -0.013,-0.454055 l -0.6097,-1.868112 h -2.88 l -0.6227,1.829193 q -0.091,0.285406 -0.065,0.454055 0.039,0.168649 0.3114,0.272433 l 0.2854,0.116757 v 0.12973 z m 1.9719,-3.061628 h 2.7113 l -1.3102,-4.034602 z"
+           id="path17" />
+      </g>
       <path
          id="path568"
          style="fill:none;fill-opacity:0;stroke:#333333;stroke-width:0.240883;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
          d="m 1447.784,28.350424 h 30.49 c 2.108,0 3.805,1.88935 3.805,4.23621 v 50.83505 c 0,2.34686 -1.697,4.23621 -3.805,4.23621 h -30.49 c -2.108,0 -3.805,-1.88935 -3.805,-4.23621 v -50.83505 c 0,-2.34686 1.697,-4.23621 3.805,-4.23621 z" />
-      <text
-         xml:space="preserve"
-         style="font-size:12.973px;line-height:0.9;font-family:'DM Serif Display';-inkscape-font-specification:'DM Serif Display';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.470471;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.1;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
-         x="-1488.6971"
-         y="-89.98938"
+      <g
+         aria-label="A"
+         transform="scale(-1)"
          id="text568"
-         transform="scale(-1)"><tspan
-           id="tspan568"
-           style="font-size:12.973px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.470471;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
-           x="-1488.6971"
-           y="-89.98938">A</tspan></text>
+         style="font-size:12.973px;line-height:0.9;font-family:'DM Serif Display';-inkscape-font-specification:'DM Serif Display';letter-spacing:0px;word-spacing:0px;stroke:#000000;stroke-width:0.470471;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.1;paint-order:stroke fill markers">
+        <path
+           d="m -1488.5934,-89.98938 v -0.12973 l 0.3244,-0.116757 q 0.2594,-0.103784 0.4021,-0.246487 0.1427,-0.155676 0.2335,-0.428109 l 2.6725,-7.667043 h 1.1027 l 2.6335,7.718935 q 0.1038,0.285406 0.2335,0.441082 0.1297,0.142703 0.4022,0.246487 l 0.1557,0.05189 v 0.12973 h -3.2952 v -0.12973 l 0.1946,-0.06486 q 0.2724,-0.103784 0.3243,-0.285406 0.065,-0.194595 -0.013,-0.454055 l -0.6098,-1.868112 h -2.88 l -0.6227,1.829193 q -0.091,0.285406 -0.065,0.454055 0.039,0.168649 0.3113,0.272433 l 0.2854,0.116757 v 0.12973 z m 1.9719,-3.061628 h 2.7114 l -1.3103,-4.034603 z"
+           id="path20" />
+      </g>
       <path
          id="path569"
          style="fill:#ffbe1a;stroke-width:2.71543;stroke-linecap:round;paint-order:markers fill stroke"
