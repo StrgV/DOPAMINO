@@ -12,11 +12,11 @@ node_modules
 .DS_Store
 Thumbs.db
 
-# Env
-.env
-.env.*
-!.env.example
-!.env.test
+# Env, for DHBW purposeses env will be in the repository, there are no API Keys, or other vulnerable things in it right now anyways
+# .env
+# .env.*
+# !.env.example
+# !.env.test
 
 # Vite
 vite.config.js.timestamp-*
