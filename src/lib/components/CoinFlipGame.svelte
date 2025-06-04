@@ -2,8 +2,6 @@
   import { onMount } from 'svelte';
   import { io as socketIOClient, type Socket } from 'socket.io-client'; // Importiere Socket-Typ
 
-  // Typdefinitionen für die Daten, die über Sockets ausgetauscht werden
-  // Diese könnten auch in einer separaten types.ts Datei liegen und importiert werden
   interface LobbyCreatedData {
     lobbyId: string;
     playerChoice: 'Heads' | 'Tails';
@@ -57,7 +55,7 @@
   let gamePhase: GamePhase = $state('initial');
   let flipResult: 'Heads' | 'Tails' | '' = $state('');
   let winnerMessage: string = $state('');
-  let messages: Message[] = $state([]); // Log-Nachrichten mit Typ
+  let messages: Message[] = $state([]); // Log-Nachrichten
 
   function addMessage(text: string, type: Message['type'] = 'info'): void {
     messages = [...messages, { text, type, id: Date.now() + Math.random() }];
@@ -65,8 +63,6 @@
   }
 
   onMount(() => {
-    // Wenn der WebSocket-Server auf demselben Host/Port wie die SvelteKit-App läuft,
-    // kann SERVER_URL weggelassen werden: socket = socketIOClient();
     socket = socketIOClient();
 
     socket.on('connect', () => {
@@ -77,7 +73,6 @@
     socket.on('disconnect', () => {
       connectionStatus = 'Verbindung getrennt';
       addMessage('Verbindung zum Server getrennt.', 'error');
-      // resetGame(); // Optional: Spielzustand aggressiver zurücksetzen
     });
 
     socket.on('errorFromServer', (data: ErrorFromServerData) => {
