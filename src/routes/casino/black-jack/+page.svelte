@@ -204,9 +204,6 @@
     <p>Karten im Deck: {deck.length}</p>
     <p>Ergebnis: {message}</p>
 
-    {#if gameOver} 
-        <button onclick={startGame}>Neue Runde</button>
-    {/if}
 
     {#if reshuffleAfterRound}
         <p>Deck wird nach der Runde neu gemischt...</p>
@@ -239,20 +236,25 @@
 </div>
 
 <div class="controls">
-    {#if betPlaced}
-    <div class="game-controls">
-        <button onclick={hit} disabled={gameOver || !betPlaced}>Hit</button>
-        <button onclick={stand} disabled={gameOver || !betPlaced}>Stand</button>
-    </div>
+
+    {#if betPlaced && !gameOver}
+        <div class="game-controls">
+            <button onclick={hit} disabled={gameOver || !betPlaced}>Hit</button>
+            <button onclick={stand} disabled={gameOver || !betPlaced}>Stand</button>
+        </div>
     {/if}
 
     {#if !betPlaced}
-    <div class="bet-controls">
-        <button onclick={bet} disabled={gameOver || betPlaced}>Setzen</button>
-        <button onclick={decreaseBet} disabled={bet_amount === bet_amounts[0] || betPlaced} style="margin-left: 1rem;">-</button>
-        <div id="bet">{bet_amount}€</div>
-        <button onclick={increaseBet} disabled={bet_amount === bet_amounts[bet_amounts.length - 1] || betPlaced}>+</button>
-    </div>
+        <div class="bet-controls">
+            <button onclick={bet} disabled={gameOver || betPlaced}>Setzen</button>
+            <button onclick={decreaseBet} disabled={bet_amount === bet_amounts[0] || betPlaced} style="margin-left: 1rem;">-</button>
+            <div id="bet">{bet_amount}€</div>
+            <button onclick={increaseBet} disabled={bet_amount === bet_amounts[bet_amounts.length - 1] || betPlaced}>+</button>
+        </div>
+    {/if}
+
+    {#if gameOver} 
+        <button onclick={startGame}>Neue Runde</button>
     {/if}
 </div>
 
