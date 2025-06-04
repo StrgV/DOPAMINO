@@ -25,4 +25,7 @@ vite.config.ts.timestamp-*
 # SQLite
 *.db
 
+#VScode
+*.vscode
+
 *storybook.log
