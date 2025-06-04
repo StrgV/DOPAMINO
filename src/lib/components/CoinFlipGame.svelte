@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount, onDestroy } from 'svelte';
+  import { onMount } from 'svelte';
   import { io as socketIOClient, type Socket } from 'socket.io-client'; // Importiere Socket-Typ
 
   // Typdefinitionen für die Daten, die über Sockets ausgetauscht werden
@@ -113,15 +113,14 @@
     socket.on('gameOver', (data: GameOverData) => {
       flipResult = data.result;
       gamePhase = 'finished';
-      addMessage(`Münzwurf: ${flipResult}!`, 'emphasis');
 
       let localWinner: string = '';
       if (isHost && data.winner === 'host') {
         localWinner = 'Host';
       } else if (!isHost && data.winner === 'guest') {
-        localWinner = 'Host';
-      } else {
         localWinner = 'Gast';
+      } else {
+        localWinner = 'Host';
       }
       const winningChoice = localWinner === 'Du' ? playerChoice : opponentChoice;
       winnerMessage = `${localWinner} hat gewonnen! (${data.result} war die richtige Wahl)`;
