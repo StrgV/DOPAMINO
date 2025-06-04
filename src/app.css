@@ -168,6 +168,8 @@ li{
   border-radius: 10px;
   overflow-y: scroll;
   text-align: left;
+  scrollbar-width: thin;
+  scrollbar-color: #888 #0000;
 }
 
 .stat-container p{
