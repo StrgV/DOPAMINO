@@ -104,7 +104,6 @@
         if (!gameOver) {
             const newCard = drawCard();
             playerHand = [...playerHand, newCard]; // force a new reference (push wasn't reactive)
-            // console.log('Current Hand:', playerHand.map(c => c.value + c.suit));
             calculateSums(); // Recalculate the sums after hitting
             if (playerSum > 21) {
                 message = 'Überkauft! Der Dealer gewinnt!'; // Player loses if sum exceeds 21

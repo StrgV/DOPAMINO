@@ -6,12 +6,8 @@ import bcrypt from 'bcrypt';
 import type { FailResponse } from '$lib/types';
 import { eq } from 'drizzle-orm';
 
-
-console.log('Register action called'); // Debugging output
-
 export const actions: Actions = {
   register: async ({ request, cookies }) => {
-    console.log('Register action called'); // Debugging output
     const form = await request.formData();
     const forename:string = form.get('forename') as string;
     const name:string = form.get('name') as string;
@@ -63,7 +59,6 @@ export const actions: Actions = {
   }
 
     
-    console.log('Inserting from form ', {forename, name, birthday: birthdayTimestamp, username, email, password}); // Debugging output
     
     // Password validation
     const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*\d).{8,}$/; // At least 8 characters, at least 1 letter and 1 number
@@ -80,7 +75,6 @@ export const actions: Actions = {
 
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
-    console.log('starting to insert user'); // Debugging output
 
     // Create a unique ID for the user
     const userId = crypto.randomUUID();
