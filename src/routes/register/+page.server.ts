@@ -62,9 +62,6 @@ export const actions: Actions = {
     });
   }
 
-    
-    console.log('Inserting from form ', {forename, name, birthday: birthdayTimestamp, username, email, password}); // Debugging output
-    
     // Password validation
     const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*\d).{8,}$/; // At least 8 characters, at least 1 letter and 1 number
     if (passwordRegex.test(password)) {
