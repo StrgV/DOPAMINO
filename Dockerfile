@@ -21,5 +21,6 @@ COPY . .
 # Expose the port that the application listens on.
 EXPOSE 5173
 
+RUN npm run db:push
 # Run the application.
 CMD npm run dev
