@@ -23,10 +23,11 @@
 
 </script>
 
+<h1 class="title">Profil</h1>
+
 <div class="content">
-    <p>Logged in as: {data.username}</p>
-    <p>Balance: {localBalance} €</p>
-    <p>Enjoy your stay!</p>
+    <p>Eingeloggt als: {data.username}</p>
+    <p>Kontostand: {localBalance} €</p>
 
     <form method="POST" action="/casino?/logout">
         <button type="submit">Logout</button>

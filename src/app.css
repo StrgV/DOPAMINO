@@ -108,6 +108,10 @@ li{
   padding-left: 15px;
 }
 
+.title{
+  position: sticky;
+  top: 0px;
+}
 
 .content{
   display: flex;

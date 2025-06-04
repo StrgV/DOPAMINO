@@ -27,5 +27,5 @@
 
 <div class="content">
     <img src="{logo}" alt="Logo of DOPAMINO" class="logo"/>
-    <h1>Welcome to the Casino</h1>
+    <h1>Willkommen im Casino</h1>
 </div>

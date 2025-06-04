@@ -1,5 +1,4 @@
 <script lang="ts">
-    import type { PageData } from './$types';
     import { onMount } from 'svelte';
     import Diamonds from '$lib/assets/Diamonds.svg';
     import Clubs from '$lib/assets/clubs.svg';
@@ -185,16 +184,16 @@
     function updateRoundMessage() {
         switch (currentRound) {
             case Round.COLOR:
-                message = 'Round 1: Guess if the next card is yellow or purple.';
+                message = 'Runde 1: Rate ob die nächste Karte gelb oder lila sein wird.';
                 break;
             case Round.HIGH_LOW:
-                message = 'Round 2: Guess if the next card is higher or lower than the previous one.';
+                message = 'Runde 2: Rate ob die nächste Karte höher oder niedriger als die vorherige sein wird.';
                 break;   
             case Round.INSIDE_OUTSIDE:
-                message = 'Round 3: Guess if the next card is inside or outside the range of the previous two cards.';
+                message = 'Runde 3: Rate ob der Wert der nächsten Karte inner- oder außerhalb der Werte der vorherigen Karten sein wird.';
                 break;
             case Round.SUIT:
-                message = 'Round 4: Guess the suit of the next card.';
+                message = 'Runde 4: Rate welches Zeichen die nächste Karte haben wird.';
                 break;
             case Round.END:
                 message = 'Game completed!'
@@ -204,7 +203,7 @@
                 break;
         }
     }
-    // cashout functio
+    // cashout function
     function cashOut() {
         if (canCashOut && !gameOver) {
             // win multiplier based on rounds completed
@@ -226,7 +225,7 @@
             adjustBalance(betAmount * winMultiplier);
             canCashOut = false;
             gameOver = true;
-            message = `You cashed out with a multiplier of x${winMultiplier}!`;
+            message = `Du hast ausgezahlt mit einem Multiplikator von x${winMultiplier}!`;
         }
     }
 
@@ -238,7 +237,7 @@
     {/each}
 </svelte:head>
 
-<h1>BUSDRIVER</h1>
+<h1 class="title">BUSDRIVER</h1>
 <p class="message">{message}</p>
 <div class="content">
         <div class="cards-container">
@@ -251,7 +250,7 @@
 <div class="controls">
     {#if !betPlaced && !gameOver}
         <div class="bet-controls">
-            <button onclick={placeBet} disabled={localBalance < betAmount}>Place Bet</button>
+            <button onclick={placeBet} disabled={localBalance < betAmount}>Setzen</button>
             <button onclick={decreaseBet} disabled={betAmount === bet_amounts[0]} style="margin-left: 1rem;">-</button>
             <div id="bet">{betAmount} €</div>
             <button onclick={increaseBet} disabled={betAmount === bet_amounts[bet_amounts.length - 1]} style="margin-right: 1rem;">+</button>
@@ -259,14 +258,14 @@
     {:else if !gameOver}
         <div class="guess-controls">
             {#if currentRound === Round.COLOR}
-                <button onclick={() => makeGuess('yellow')}>Yellow</button>
-                <button onclick={() => makeGuess('purple')}>Purple</button>
+                <button onclick={() => makeGuess('yellow')}>Gelb</button>
+                <button onclick={() => makeGuess('purple')}>Lila</button>
             {:else if currentRound === Round.HIGH_LOW}
-                <button onclick={() => makeGuess('higher')}>Higher</button>
-                <button onclick={() => makeGuess('lower')}>Lower</button>
+                <button onclick={() => makeGuess('higher')}>Höher</button>
+                <button onclick={() => makeGuess('lower')}>Niedriger</button>
             {:else if currentRound === Round.INSIDE_OUTSIDE}
-                <button onclick={() => makeGuess('inside')}>Inside</button>
-                <button onclick={() => makeGuess('outside')}>Outside</button>
+                <button onclick={() => makeGuess('inside')}>Innerhalb</button>
+                <button onclick={() => makeGuess('outside')}>Außerhalb</button>
             {:else if currentRound === Round.SUIT}
             <div>
                 <button onclick={() => makeGuess('♥️')} class="suit-buttons"><img src="{Hearts}" alt="Hearts" style="height: 20px"></button>
@@ -277,13 +276,13 @@
             {/if}
 
             {#if canCashOut}
-                <button onclick={cashOut} class="cash-out">Cash Out</button>
+                <button onclick={cashOut} class="cash-out">Auszahlen</button>
             {/if}
         </div>
     {/if}
     
     {#if gameOver}
-        <button onclick={startGame}>Play Again</button>
+        <button onclick={startGame}>Neue Runde</button>
     {/if}
 
 </div>
@@ -302,11 +301,6 @@
 </div>
 
 <style>
- h1 {
-        position: sticky;
-        top: 0px;
-    }
-    
     .message {
         font-size: 1.2rem;
         margin: 0.5rem 0;

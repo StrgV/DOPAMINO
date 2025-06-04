@@ -101,32 +101,24 @@
     }
 
     function hit() {
-        if (!betPlaced) {
-            message = 'You must place a bet before drawing a card!';
-            return;
-        }
         if (!gameOver) {
             const newCard = drawCard();
             playerHand = [...playerHand, newCard]; // force a new reference (push wasn't reactive)
             // console.log('Current Hand:', playerHand.map(c => c.value + c.suit));
             calculateSums(); // Recalculate the sums after hitting
             if (playerSum > 21) {
-                message = 'You busted! Dealer wins!'; // Player loses if sum exceeds 21
+                message = 'Überkauft! Der Dealer gewinnt!'; // Player loses if sum exceeds 21
                 gameOver = true; 
             }
             else if (playerSum === 21) {
                 adjustBalance(+bet_amount * 2); // Update balance when winning
-                message = 'Blackjack! You win!'; // Player wins with a sum of 21
+                message = 'Blackjack! Du gewinnst!'; // Player wins with a sum of 21
                 gameOver = true; 
             }
         }
     }
     
     function stand() {
-        if (!betPlaced) {
-            message = 'You must place a bet before standing!';
-            return;
-        }
         while (dealerSum < 17) {
             dealerHand.push(drawCard()); // Dealer hits until >= 17
             calculateSums(); // Recalculate the sums the dealer hits
@@ -136,29 +128,28 @@
         gameOver = true; // End the game
 
         if (playerSum > 21) {
-            message = 'You busted! Dealer wins!';
+        message = 'Du bist raus! Der Dealer gewinnt!';
         } else if (dealerSum > 21) {
-            adjustBalance(+bet_amount * 2); // Update balance when winning
-            message = 'Dealer busted! You win!';
+        adjustBalance(+bet_amount * 2); // Update balance when winning
+        message = 'Der Dealer ist raus! Du gewinnst!';
         } else if (playerSum === 21 && playerHand.length === 2) {
-            adjustBalance(+bet_amount *2),
-            message = 'Black Jack! You win!';
+        adjustBalance(+bet_amount * 2), (message = 'Blackjack! Du gewinnst!');
         } else if (dealerSum === 21 && dealerHand.length === 2) {
-            message = 'Dealer has Blackjack! Dealer wins!';
+        message = 'Der Dealer hat Blackjack! Der Dealer gewinnt!';
         } else if (playerSum > dealerSum) {
-            adjustBalance(+bet_amount * 2); // Update balance when winning
-            message = 'You win!';
+        adjustBalance(+bet_amount * 2); // Update balance when winning
+        message = 'Du gewinnst!';
         } else if (playerSum < dealerSum) {
-            message = 'Dealer wins!';
+        message = 'Der Dealer gewinnt!';
         } else if (playerSum === dealerSum) {
-            adjustBalance(+bet_amount); // Update balance for a tie
-            message = 'It\'s a tie!';
+        adjustBalance(+bet_amount); // Update balance for a tie
+        message = 'Es ist ein Unentschieden!';
         }
     }
     
     function bet() {
         if (localBalance < bet_amount) {
-            message = 'Insufficient balance!'; // Prevent betting if balance is too low
+            message = 'Nicht genügend Geld!'; // Prevent betting if balance is too low
             return;
         }
 
@@ -256,15 +247,12 @@
         <button onclick={bet} disabled={gameOver || betPlaced}>Setzen</button>
         <button onclick={decreaseBet} disabled={bet_amount === bet_amounts[0] || betPlaced} style="margin-left: 1rem;">-</button>
         <div id="bet">{bet_amount}€</div>
-        <button onclick={increaseBet} disabled={bet_amount === bet_amounts[bet_amounts.length - 1] || betPlaced} style="margin-right: 1rem;">+</button>
+        <button onclick={increaseBet} disabled={bet_amount === bet_amounts[bet_amounts.length - 1] || betPlaced}>+</button>
     </div>
 </div>
 
 <style>
-    .title{
-        position: sticky;
-        top: 0px;
-    }
+    
 
     .game-container {
         display: flex;
@@ -316,8 +304,9 @@
 
     #bet {
         display: inline-block;
-        width: 6ch; /* Platz für 4 Ziffern, z.B. "5000" */
+        width: 6ch; 
+        font-weight: bold;
         text-align: center;
-        font-variant-numeric: tabular-nums; /* gleiche Ziffernbreite, falls unterstützt */
+        font-variant-numeric: tabular-nums; 
     }
 </style>

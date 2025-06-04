@@ -1,6 +1,5 @@
 <script lang="ts">
     import logo from "$lib/assets/DOPAMINO_Text_Logo.svg";
-	import Page from "./casino/+page.svelte";
 
     let {form} = $props<{
         form?: {
@@ -16,14 +15,29 @@
 <h2 class="italic">~wir sind dein Casino</h2>
 <form method="POST" action="?/login">
     <input name="username" placeholder="Username" value="{form?.values?.username || ''}" />
-    <input name="password" type="password" placeholder="Passwort" required />
-    <button type="submit">Sign in</button>
+    <input name="password" type="password" placeholder="Password" required />
+    <button type="submit">Anmelden</button>
 </form>
 
-<p>Noch kein Account?</p>
-<button onclick = {() => window.location.href = '/register'}>Sign up</button>
+<div class="register">
+    <p>Noch kein Account?</p>
+    <button onclick = {() => window.location.href = '/register'}>Registrieren</button>
+</div>
 
 <!-- Fehlermeldung anzeigen -->
 {#if form?.error}
     <p style="color: red;">{form.error}</p>
 {/if}
+
+<style>
+.register{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    bottom: 5%;
+}
+
+.register button {
+    background-color: var(--primary-color);
+}
+</style>
