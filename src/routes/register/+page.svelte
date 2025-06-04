@@ -29,8 +29,13 @@
     };
 </script>
 
-<h1>Register</h1>
-<!-- <p>form.values.username</p> -->
+<h1>Registrierung</h1>
+
+<!-- Fehlermeldung anzeigen -->
+{#if form?.error}
+    <p style="color: red">{form?.error}</p>
+{/if}
+
 <form method="POST" action="?/register">
     <div class="column">
         <input name="forename" placeholder="Vorname" value="{form?.values?.forename}" required />
@@ -42,11 +47,7 @@
         <input name="username" placeholder="Benutzername" value="{form?.values?.username}" required />
         <input name="email" type="email" placeholder="E-Mail" value="{form?.values?.email}" required />
         <input name="password" type="password" placeholder="Passwort" required />
-        <button type="submit">Sign up</button>
+        <button type="submit">Registrieren</button>
     </div>
 </form>
 
-<!-- Fehlermeldung anzeigen -->
-{#if form?.error}
-    <p style="color: red">{form?.error}</p>
-{/if}
