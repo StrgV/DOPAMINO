@@ -58,8 +58,6 @@ export const actions: Actions = {
     });
   }
 
-    
-    
     // Password validation
     const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*\d).{8,}$/; // At least 8 characters, at least 1 letter and 1 number
     if (passwordRegex.test(password)) {
