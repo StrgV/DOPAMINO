@@ -112,10 +112,12 @@
       let localWinner: string = '';
       if (isHost && data.winner === 'host') {
         localWinner = 'Host';
+      } else if (isHost && data.winner === 'guest') {
+        localWinner = 'Gast';
+      } else if (!isHost && data.winner === 'host') {
+        localWinner = 'Host';
       } else if (!isHost && data.winner === 'guest') {
         localWinner = 'Gast';
-      } else {
-        localWinner = 'Host';
       }
       const winningChoice = localWinner === 'Du' ? playerChoice : opponentChoice;
       winnerMessage = `${localWinner} hat gewonnen! (${data.result} war die richtige Wahl)`;
