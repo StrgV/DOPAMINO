@@ -29,8 +29,8 @@ const webSocketPlugin: PluginOption = {
 export default defineConfig({
 	plugins: [tailwindcss(), sveltekit(), webSocketPlugin],
 	server: {
-		host: '0.0.0.0',
-		port: 5173
+		host: true,
+		allowedHosts : true
 	},
 	test: {
 		workspace: [
